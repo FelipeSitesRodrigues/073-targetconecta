@@ -1,0 +1,80 @@
+/* ================================================================ 09 · CTA final
+   Escuro e mais alto que as outras seções. Título à esquerda com a parte dourada,
+   botão grande de duas linhas (ação e número) à direita, como no mockup. Os anéis
+   do alvo ficam atrás do botão e a trajetória da flecha chega neles em arco.      */
+
+.cta {
+  padding-block: clamp(80px, 9vw, 132px);
+  overflow: clip;
+  background:
+    radial-gradient(60% 90% at 0% 100%, rgb(13 26 51 / .8), transparent 70%),
+    linear-gradient(180deg, #03101F, var(--noite-azul));
+}
+.cta__fundo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cta__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+}
+.cta__titulo { font-size: clamp(2.2rem, 1.4rem + 2.3vw, 3.4rem); line-height: 1.02; }
+.cta__titulo .destaque { display: block; }
+.cta__texto .texto-apoio { max-width: 44ch; margin-top: 18px; }
+
+.cta__acao {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+}
+.cta__btn {
+  gap: 16px;
+  min-height: 84px;
+  padding: 12px 28px 12px 14px;
+  text-align: left;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 20px 50px -18px rgb(201 162 74 / .75);
+}
+.cta__zap {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex: none;
+  border-radius: 50%;
+  background: rgb(5 10 20 / .1);
+  box-shadow: inset 0 0 0 1.5px rgb(5 10 20 / .22);
+}
+.cta__zap .i { width: 30px; height: 30px; }
+.cta__rotulos { display: grid; gap: 4px; }
+.cta__rotulo { font: 700 clamp(18px, 16px + .4vw, 21px)/1.1 var(--fonte-forte); }
+.cta__numero { font: 800 clamp(17px, 15.5px + .35vw, 20px)/1 var(--fonte-titulo); letter-spacing: .02em; opacity: .85; }
+.cta__btn .seta { width: 22px; height: 22px; margin-left: 6px; }
+.cta__nota { color: rgb(196 202 212 / .82); font-size: 14px; text-align: center; text-wrap: balance; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* a flecha "voa" até o alvo quando o fundo entra na tela (data-revela no SVG) */
+  .cta__trajetoria { stroke-dasharray: 1200; stroke-dashoffset: 0; }
+  .js .cta__fundo:not(.visivel) .cta__trajetoria { stroke-dashoffset: 1200; }
+  .js .cta__fundo.visivel .cta__trajetoria { transition: stroke-dashoffset 1.8s var(--ease-out) .3s; }
+}
+
+/* ---------------------------------------------------------------- tablet e celular */
+@media (max-width: 899.98px) {
+  .cta__grade { grid-template-columns: 1fr; }
+  .cta__acao { justify-items: stretch; }
+  .cta__btn { width: 100%; justify-content: flex-start; }
+  .cta__btn .seta { margin-left: auto; }
+}
+@media (max-width: 419.98px) {
+  .cta__btn { gap: 12px; min-height: 76px; padding: 10px 18px 10px 10px; }
+  .cta__zap { width: 50px; height: 50px; }
+  .cta__zap .i { width: 26px; height: 26px; }
+  .cta__rotulo { font-size: 17.5px; }
+}

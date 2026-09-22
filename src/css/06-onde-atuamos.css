@@ -1,0 +1,132 @@
+/* ================================================================ 06 · Onde atuamos
+   Claro. Desktop: texto, mapa e card escuro em três colunas, como no mockup.
+   O mapa é SVG com a geografia do IBGE: MS e o oeste paulista em marinho com
+   contorno dourado, vizinhos claros ao fundo e os anéis do alvo como marcadores.
+   Celular: texto, mapa na largura toda, o card e o botão.                        */
+
+.onde__grade {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.25fr) minmax(0, .8fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "texto mapa card"
+    "acao mapa card";
+  align-items: center;
+  gap: 0 clamp(24px, 3vw, 44px);
+}
+.onde__texto { grid-area: texto; align-self: end; }
+.onde__texto .texto-apoio { margin-top: 16px; max-width: 36ch; }
+.onde__acao { grid-area: acao; align-self: start; padding-top: 24px; }
+
+/* ---------------------------------------------------------------- mapa */
+.onde__mapa { grid-area: mapa; }
+.mapa__quadro {
+  position: relative;
+  aspect-ratio: var(--mapa-proporcao);
+}
+.mapa__svg { width: 100%; height: 100%; overflow: visible; }
+.mapa__vizinhos { fill: #E4E9F1; stroke: #CDD5E1; stroke-width: .8; }
+.mapa__sp { fill: #D5DCE7; stroke: #BCC6D4; stroke-width: .8; }
+.mapa__ms {
+  fill: url(#mapa-marinho);
+  stroke: var(--ouro);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+.mapa__oeste {
+  fill: url(#mapa-oeste-fundo);
+  stroke: var(--ouro-claro);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+.mapa__chamada { fill: none; stroke: var(--ouro); stroke-width: 1.2; }
+.mapa__anel { fill: none; stroke: var(--ouro-claro); stroke-width: 1.3; }
+.mapa__anel--2 { stroke-opacity: .7; }
+.mapa__anel--3 { stroke-opacity: .4; }
+.mapa__miolo { fill: var(--ouro-claro); }
+.mapa__cidade .mapa__anel { stroke-opacity: .85; }
+
+/* nomes em HTML por cima do SVG: ficam legíveis em qualquer largura */
+.mapa__nome {
+  position: absolute;
+  translate: -50% -50%;
+  color: var(--gelo);
+  font: 700 clamp(13px, 11px + .5vw, 17px)/1.12 var(--fonte-forte);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.mapa__nome--oeste {
+  display: grid;
+  gap: 3px;
+  translate: 0 -50%;
+  color: var(--tinta);
+  text-align: left;
+}
+.mapa__nome--oeste strong { font: 700 clamp(14px, 12px + .5vw, 18px)/1.05 var(--fonte-forte); }
+.mapa__nome--oeste small { color: var(--texto-claro); font: 600 clamp(11px, 10px + .2vw, 12.5px)/1.2 var(--fonte-texto); }
+
+/* ---------------------------------------------------------------- card escuro */
+.onde__card {
+  grid-area: card;
+  display: grid;
+  gap: 0;
+  padding: 8px 24px;
+  border-radius: var(--raio);
+  background:
+    radial-gradient(90% 60% at 100% 0%, rgb(34 55 90 / .5), transparent 70%),
+    var(--marinho);
+  box-shadow: 0 26px 50px -30px rgb(5 10 20 / .8);
+}
+.onde__item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 22px 0;
+}
+.onde__item + .onde__item { border-top: 1px solid var(--linha-escura); }
+.onde__icone { width: 38px; height: 38px; color: var(--ouro); }
+.onde__item-titulo { display: block; color: var(--gelo); font: 700 17px/1.25 var(--fonte-forte); }
+.onde__item-texto { display: block; margin-top: 5px; color: var(--prata); font-size: 14px; line-height: 1.5; }
+.onde__endereco { text-decoration: underline; text-decoration-color: rgb(196 202 212 / .35); text-underline-offset: 3px; transition: color .25s ease; }
+.onde__endereco:hover { color: var(--ouro-claro); }
+
+/* ---------------------------------------------------------------- entrada dos marcadores */
+@media (prefers-reduced-motion: no-preference) {
+  .js .onde__mapa:not(.visivel) .mapa__pontos { opacity: 0; }
+  .js .onde__mapa.visivel .mapa__base .mapa__anel--3 { animation: onde-pulso 1.6s var(--ease-out) .5s backwards; transform-origin: 0 0; }
+  .js .onde__mapa.visivel .mapa__base .mapa__anel--2 { animation: onde-pulso 1.4s var(--ease-out) .4s backwards; transform-origin: 0 0; }
+  .js .onde__mapa.visivel .mapa__chamada { stroke-dasharray: 200; animation: onde-traco 1.2s var(--ease-out) .6s backwards; }
+}
+@keyframes onde-pulso { from { opacity: 0; transform: scale(.3); } }
+@keyframes onde-traco { from { stroke-dashoffset: 200; } }
+
+/* ---------------------------------------------------------------- tablet e celular */
+@media (max-width: 1099.98px) {
+  .onde__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "texto texto"
+      "mapa card"
+      "acao acao";
+    gap: 28px 32px;
+  }
+  .onde__acao { padding-top: 0; }
+}
+@media (max-width: 719.98px) {
+  .onde__grade {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas:
+      "texto"
+      "mapa"
+      "card"
+      "acao";
+    gap: 24px;
+  }
+  .onde__card { padding: 4px 18px; }
+  .onde__acao { text-align: center; }
+  .onde__btn { width: 100%; min-height: 52px; }
+}

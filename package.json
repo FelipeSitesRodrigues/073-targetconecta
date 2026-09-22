@@ -1,0 +1,24 @@
+{
+  "name": "073-target-connecta",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site da Target Connecta: terceirização comercial, telemarketing e venda porta a porta no oeste paulista e no MS. HTML, CSS e JS estático.",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node scripts/serve.mjs 3073",
+    "imagens": "node scripts/processar-imagens.mjs",
+    "fontes": "node scripts/baixar-fontes.mjs",
+    "mapa": "node scripts/gerar-mapa.mjs",
+    "testar": "node scripts/testar.mjs",
+    "publicar": "node build.mjs --publicar"
+  },
+  "devDependencies": {
+    "@phosphor-icons/core": "^2.1.1",
+    "cheerio": "^1.2.0",
+    "lighthouse": "^12.8.2",
+    "puppeteer-core": "^25.11.0",
+    "sharp": "^0.35.4",
+    "subset-font": "^2.9.0"
+  }
+}

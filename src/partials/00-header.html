@@ -1,0 +1,54 @@
+  <!-- 00 · Header. Fixo em cima, transparente sobre o hero e marinho com blur depois
+       que a página rola (o sentinela abaixo marca os primeiros 64 px). -->
+  <div class="cab-sentinela" id="cab-sentinela" aria-hidden="true"></div>
+
+  <header class="cab escuro" id="cab">
+    <div class="cab__barra container">
+      <a class="cab__marca" href="#inicio">
+        <img data-img="logo-horizontal" data-img-max="520" sizes="(min-width: 1200px) 250px, 184px" alt="Target Connecta" decoding="async">
+      </a>
+
+      <nav class="cab__nav" aria-label="Menu principal">
+        <ul class="cab__lista">
+          <li><a class="cab__link" href="#servicos">Serviços</a></li>
+          <li><a class="cab__link" href="#como-trabalhamos">Como trabalhamos</a></li>
+          <li><a class="cab__link" href="#planos">Planos</a></li>
+          <li><a class="cab__link" href="#sobre">Sobre</a></li>
+          <li><a class="cab__link" href="#duvidas">Dúvidas</a></li>
+        </ul>
+      </nav>
+
+      <div class="cab__acoes">
+        <a class="cab__vendedor" href="{{vendedor}}" target="_blank" rel="noopener" data-evento="vendedor" data-zap="header-vendedor" title="Área do vendedor">
+          <i data-i="lock-simple" data-w="regular"></i>
+          <span>Área do vendedor</span>
+        </a>
+        <a class="btn btn--ouro cab__cta" href="{{wa:empresa}}" target="_blank" rel="noopener" data-zap="header"><i data-i="whatsapp-logo" data-w="regular"></i>Falar com a Target</a>
+        <a class="cab__zap" href="{{wa:empresa}}" target="_blank" rel="noopener" data-zap="header-celular" aria-label="Falar com a Target no WhatsApp"><i data-i="whatsapp-logo" data-w="regular"></i></a>
+        <button class="cab__abrir" type="button" aria-expanded="false" aria-controls="menu-celular" aria-label="Menu">
+          <span class="cab__traco"></span>
+          <span class="cab__traco"></span>
+          <span class="cab__traco"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu do celular e do tablet: painel abaixo da barra do header, que continua
+       visível (o hambúrguer vira o X). Some a partir de 1200 px. -->
+  <div class="cab-menu escuro" id="menu-celular" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="fio-ouro cab-menu__fio" aria-hidden="true"></div>
+    <nav class="cab-menu__nav container" aria-label="Menu do celular">
+      <ul class="cab-menu__lista">
+        <li class="cab-menu__item" style="--i:0"><a class="cab-menu__link" href="#servicos"><span class="cab-menu__num" aria-hidden="true">01</span><span class="cab-menu__txt">Serviços</span><i data-i="arrow-right" data-w="regular"></i></a></li>
+        <li class="cab-menu__item" style="--i:1"><a class="cab-menu__link" href="#como-trabalhamos"><span class="cab-menu__num" aria-hidden="true">02</span><span class="cab-menu__txt">Como trabalhamos</span><i data-i="arrow-right" data-w="regular"></i></a></li>
+        <li class="cab-menu__item" style="--i:2"><a class="cab-menu__link" href="#planos"><span class="cab-menu__num" aria-hidden="true">03</span><span class="cab-menu__txt">Planos</span><i data-i="arrow-right" data-w="regular"></i></a></li>
+        <li class="cab-menu__item" style="--i:3"><a class="cab-menu__link" href="#sobre"><span class="cab-menu__num" aria-hidden="true">04</span><span class="cab-menu__txt">Sobre</span><i data-i="arrow-right" data-w="regular"></i></a></li>
+        <li class="cab-menu__item" style="--i:4"><a class="cab-menu__link" href="#duvidas"><span class="cab-menu__num" aria-hidden="true">05</span><span class="cab-menu__txt">Dúvidas</span><i data-i="arrow-right" data-w="regular"></i></a></li>
+      </ul>
+    </nav>
+    <div class="cab-menu__pe cab-menu__item container" style="--i:5">
+      <a class="btn btn--ouro cab-menu__cta" href="{{wa:empresa}}" target="_blank" rel="noopener" data-zap="menu"><i data-i="whatsapp-logo" data-w="regular"></i>Falar com a Target</a>
+      <a class="cab-menu__vendedor" href="{{vendedor}}" target="_blank" rel="noopener" data-evento="vendedor" data-zap="menu-vendedor"><i data-i="lock-simple" data-w="regular"></i>Área do vendedor</a>
+    </div>
+  </div>

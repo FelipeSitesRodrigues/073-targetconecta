@@ -1,0 +1,29 @@
+{
+  "dominio": "https://targetconecta.com.br",
+  "nome": "Target Connecta",
+  "whatsapp": "5518991665272",
+  "whatsappExibir": "(18) 99166-5272",
+  "email": "rafaelborges@targetconecta.com.br",
+  "cnpj": "",
+  "endereco": {
+    "rua": "Rua Zeferino Daniel Caseiro, 566",
+    "bairro": "Jardim Maracanã",
+    "cidade": "Presidente Prudente",
+    "uf": "SP",
+    "cep": "19026-250"
+  },
+  "mapa": "https://www.google.com/maps/search/?api=1&query=Rua+Zeferino+Daniel+Caseiro%2C+566+-+Jardim+Maracan%C3%A3%2C+Presidente+Prudente+-+SP",
+  "instagram": "",
+  "painelVendedor": "",
+  "entrevistaBand": "",
+  "credito": "https://www.instagram.com/credialta.sites/",
+  "mensagens": {
+    "empresa": "Olá! Vim pelo site da Target Connecta. Tenho uma empresa e quero conversar sobre terceirizar as vendas, no telemarketing e no porta a porta.",
+    "telemarketing": "Olá! Vim pelo site da Target Connecta e quero conversar sobre *telemarketing e televendas* para a minha empresa.",
+    "portaAPorta": "Olá! Vim pelo site da Target Connecta e quero conversar sobre *venda porta a porta* para a minha empresa.",
+    "operacaoCompleta": "Olá! Vim pelo site da Target Connecta e quero conversar sobre a *operação completa, com telemarketing e porta a porta*, para a minha empresa.",
+    "cidadeNova": "Olá! Vim pelo site da Target Connecta e quero conversar sobre *abertura de cidade nova* para a minha empresa.",
+    "vendedor": "Olá! Sou vendedor da Target Connecta e quero acessar a Área do vendedor.",
+    "cadastroPlano": "Olá! Meu nome é {nome}, vim pelo site da Target Connecta e quero assinar o *{plano}*, de R$ {preco} por mês.\nTelefone: {telefone}\nE-mail: {email}"
+  }
+}

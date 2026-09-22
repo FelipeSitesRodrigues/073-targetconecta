@@ -1,0 +1,7 @@
+node_modules/
+scripts/.cache/
+.tmp/
+revisao/
+lighthouse/
+# recortes do mockup: só o scripts/revisar.mjs usa, ficam na máquina
+referencias/

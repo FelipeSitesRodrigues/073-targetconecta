@@ -1,0 +1,85 @@
+<!-- 02 · Sobre (bloco 3 da copy). Fica no lugar do "Por que terceirizar" do mockup,
+     no mesmo fundo claro e com o mesmo cabeçalho de duas colunas e a fileira de 4 cards.
+     Foto real dos fundadores na Band Paulista, sem a arte da apresentação por cima. -->
+<section class="secao secao--clara sobre" id="sobre" aria-labelledby="sobre-titulo">
+  <div class="container">
+    <header class="secao-cab">
+      <div data-revela>
+        <span class="rotulo">Onde nascemos</span>
+        <h2 class="titulo" id="sobre-titulo">Nascemos dentro de uma operadora.</h2>
+      </div>
+      <div class="secao-cab__apoio texto-apoio sobre__intro" data-revela style="--i:1">
+        <p>A Target Connecta nasceu depois de <strong>12 meses de meta batida</strong> na venda da Fleetnet.</p>
+        <p>Dali saiu a decisão de criar uma empresa só pra encontrar bons vendedores, preparar cada um e acompanhar de perto.</p>
+      </div>
+    </header>
+
+    <div class="sobre__frente">
+      <figure class="sobre__foto" data-revela="foto">
+        <img data-img="fundadores-band" data-img-max="960" sizes="(min-width: 1240px) 600px, (min-width: 900px) 48vw, calc(100vw - 40px)" alt="Rafael Borges e Cássio Esteves, fundadores da Target Connecta, em entrevista à Band Paulista" loading="lazy" decoding="async">
+        <figcaption class="sobre__legenda"><i data-i="television" data-w="regular"></i>Entrevista à Band Paulista</figcaption>
+      </figure>
+
+      <div class="sobre__texto">
+        <p class="sobre__lead" data-revela>Hoje a Target tem contrato de exclusividade com a Fleetnet, uma das maiores operadoras do oeste paulista, e é quem leva a internet dela até o cliente.</p>
+        <p class="texto-apoio" data-revela style="--i:1">Pra sua empresa, isso quer dizer um time que aprendeu a vender no telefone e na rua, com meta, supervisão e cliente de verdade.</p>
+
+        <div class="sobre__pessoas" data-revela style="--i:2">
+          <span class="rotulo">Quem está à frente</span>
+          <ul class="sobre__nomes" role="list">
+            <li>
+              <strong class="sobre__nome">Cássio Esteves</strong>
+              <span class="sobre__cargo">Fundador da Target Connecta e CEO da Fleetnet</span>
+            </li>
+            <li>
+              <strong class="sobre__nome">Rafael Borges</strong>
+              <span class="sobre__cargo">Cofundador e supervisor de vendas</span>
+            </li>
+          </ul>
+          <!-- @se cfg.entrevistaBand -->
+          <a class="pilula sobre__video" href="{{cfg.entrevistaBand}}" target="_blank" rel="noopener"><i data-i="play-circle" data-w="regular"></i>Assistir à entrevista</a>
+          <!-- /@se -->
+        </div>
+      </div>
+    </div>
+
+    <div class="sobre__valores">
+      <span class="rotulo sobre__valores-rotulo" data-revela>Nossos valores</span>
+      <ul class="sobre__cards" role="list">
+        <li class="card card--sobe valor" data-revela>
+          <i data-i="users-three" class="icone"></i>
+          <h3 class="valor__titulo">Pessoas</h3>
+          <p class="valor__texto">Gente que faz acontecer.</p>
+        </li>
+        <li class="card card--sobe valor" data-revela style="--i:1">
+          <i data-i="hand-heart" class="icone"></i>
+          <h3 class="valor__titulo">Parceria</h3>
+          <p class="valor__texto">Relações de confiança que duram.</p>
+        </li>
+        <li class="card card--sobe valor" data-revela style="--i:2">
+          <i data-i="lightbulb" class="icone"></i>
+          <h3 class="valor__titulo">Inovação</h3>
+          <p class="valor__texto">Soluções que evoluem com você.</p>
+        </li>
+        <li class="card card--sobe valor" data-revela style="--i:3">
+          <i data-i="target" class="icone"></i>
+          <h3 class="valor__titulo">Resultados</h3>
+          <p class="valor__texto">Foco no hoje, com olhar no amanhã.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sobre__proposito">
+      <div class="sobre__bloco" data-revela>
+        <h3 class="rotulo">Missão</h3>
+        <p>Conectar pessoas e negócios às melhores soluções em telecomunicações, com transparência, agilidade e parceria, gerando valor e impulsionando o crescimento dos nossos clientes, vendedores e parceiros.</p>
+      </div>
+      <div class="sobre__bloco" data-revela style="--i:1">
+        <h3 class="rotulo">Visão</h3>
+        <p>Ser referência em representação comercial e promoção de vendas no setor de telecom, reconhecida pela excelência, por desenvolver pessoas e por criar novas oportunidades de crescimento em todo o Brasil.</p>
+      </div>
+    </div>
+
+    <p class="sobre__fecho" data-revela>Juntos hoje. <span>Mais longe amanhã.</span></p>
+  </div>
+</section>

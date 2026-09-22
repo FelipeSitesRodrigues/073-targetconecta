@@ -1,0 +1,348 @@
+/* ================================================================ 00 · Header (cab)
+   Fixo em cima, por cima do hero. No topo é transparente, com um véu escuro que
+   garante a leitura sobre a foto; depois de 64 px de rolagem (sentinela observado
+   no 00-header.js) vira marinho translúcido com blur e ganha o fio de aço na borda
+   de baixo. Menu completo a partir de 1200 px; abaixo disso, hambúrguer.       */
+
+.cab-sentinela {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 64px;
+  pointer-events: none;
+}
+
+.cab {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--altura-header);
+  padding-right: var(--cab-barra, 0px);
+  color: var(--gelo);
+  transition:
+    background-color .5s var(--ease-out),
+    box-shadow .5s var(--ease-out),
+    height .45s var(--ease-out),
+    -webkit-backdrop-filter .5s var(--ease-out),
+    backdrop-filter .5s var(--ease-out);
+}
+/* véu do topo: some quando o header fica sólido */
+.cab::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -40px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(2 7 16 / .78) 0%, rgb(2 7 16 / .38) 55%, rgb(2 7 16 / 0) 100%);
+  transition: opacity .5s var(--ease-out);
+}
+/* fio de aço na borda de baixo, só no estado rolado */
+.cab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(34 55 90 / .9) 15%, rgb(34 55 90 / .9) 85%, transparent);
+  opacity: 0;
+  transition: opacity .5s var(--ease-out);
+}
+.cab--rolado,
+.cab--menu {
+  background-color: rgb(3 9 20 / .86);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 10px 28px -20px rgb(0 0 0 / .8);
+}
+.cab--menu { background-color: rgb(3 9 20 / .97); box-shadow: none; }
+.cab--rolado::before,
+.cab--menu::before { opacity: 0; }
+.cab--rolado::after,
+.cab--menu::after { opacity: 1; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cab--rolado { background-color: rgb(3 9 20 / .97); }
+}
+
+.cab__barra {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ---------------------------------------------------------------- logo */
+.cab__marca {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  border-radius: 4px;
+}
+.cab__marca img {
+  width: 250px;
+  height: auto;
+  transform-origin: 0 50%;
+  transition: transform .5s var(--ease-out);
+}
+.cab--rolado .cab__marca img { transform: scale(.9); }
+
+/* ---------------------------------------------------------------- menu (desktop) */
+.cab__lista {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.1vw, 34px);
+}
+.cab__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: rgb(243 245 249 / .88);
+  font: 600 14.5px/1 var(--fonte-texto);
+  letter-spacing: .005em;
+  white-space: nowrap;
+  transition: color .25s ease;
+}
+/* traço dourado embaixo, como o "Início" ativo do mockup: abre no hover e fica na seção ativa */
+.cab__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ouro);
+  opacity: 0;
+  transform: scaleX(0);
+  transition: transform .45s var(--ease-out), opacity .3s ease;
+}
+.cab__link:hover { color: var(--branco); }
+.cab__link:hover::after { opacity: .6; transform: scaleX(.45); }
+.cab__link[aria-current] { color: var(--ouro-claro); }
+.cab__link[aria-current]::after { opacity: 1; transform: scaleX(1); }
+
+/* ---------------------------------------------------------------- ações */
+.cab__acoes {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 1.8vw, 28px);
+}
+/* porta de serviço, não de venda: texto menor e sem fundo, pra não competir com o botão */
+.cab__vendedor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: rgb(196 202 212 / .9);
+  font: 600 13.5px/1 var(--fonte-texto);
+  white-space: nowrap;
+  transition: color .25s ease;
+}
+.cab__vendedor .i { width: 17px; height: 17px; color: var(--ouro); transition: transform .35s var(--ease-out); }
+.cab__vendedor:hover { color: var(--branco); }
+.cab__vendedor:hover .i { transform: translateY(-1px); }
+.cab__cta { min-height: 48px; padding: 0 24px; font-size: 15.5px; }
+.cab__cta .i { width: 21px; height: 21px; }
+
+/* botão redondo do WhatsApp (celular e tablet, como no mockup mobile) */
+.cab__zap {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ouro-gradiente);
+  color: var(--noite);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .45), 0 8px 20px -10px rgb(201 162 74 / .8);
+  transition: transform .3s var(--ease-out), filter .25s ease;
+}
+.cab__zap .i { width: 24px; height: 24px; }
+.cab__zap:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.cab__zap:active { transform: scale(.96); }
+
+/* ---------------------------------------------------------------- hambúrguer (dourado, como no mockup) */
+.cab__abrir {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  margin-right: -10px;
+  border-radius: 8px;
+  color: var(--ouro-claro);
+}
+.cab__traco {
+  position: absolute;
+  right: 11px;
+  width: 26px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform .45s var(--ease-out), opacity .25s ease, width .35s var(--ease-out);
+}
+.cab__traco:nth-child(1) { top: 15px; }
+.cab__traco:nth-child(2) { top: 23px; }
+.cab__traco:nth-child(3) { top: 31px; }
+.cab__abrir[aria-expanded="true"] .cab__traco:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.cab__abrir[aria-expanded="true"] .cab__traco:nth-child(2) { opacity: 0; transform: translateX(8px); }
+.cab__abrir[aria-expanded="true"] .cab__traco:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ---------------------------------------------------------------- desktop */
+@media (min-width: 1200px) {
+  .cab__barra {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px;
+  }
+  .cab__nav { justify-self: center; }
+}
+/* 1200 a 1359: o link do vendedor vira só o cadeado (o nome vai pro leitor de tela e pro title) */
+@media (min-width: 1200px) and (max-width: 1359.98px) {
+  .cab__vendedor span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .cab__vendedor .i { width: 20px; height: 20px; }
+  .cab__marca img { width: 224px; }
+}
+
+/* ---------------------------------------------------------------- tablet e celular */
+@media (max-width: 1199.98px) {
+  .cab__nav,
+  .cab__vendedor,
+  .cab__cta { display: none; }
+  .cab__marca img { width: 184px; }
+  .cab--rolado .cab__marca img { transform: none; }
+  .cab__zap { display: grid; }
+  .cab__abrir { display: block; }
+  .cab__acoes { gap: 12px; }
+}
+@media (max-width: 359.98px) {
+  .cab__marca img { width: 158px; }
+}
+
+/* ---------------------------------------------------------------- painel do celular
+   Fica abaixo da barra do header (que continua visível, com o X no lugar do
+   hambúrguer). Marinho com blur, links grandes, botão e área do vendedor no pé. */
+html.cab-trava,
+html.cab-trava body { overflow: hidden; }
+html.cab-trava body { padding-right: var(--cab-barra, 0px); }
+
+.cab-menu {
+  position: fixed;
+  top: var(--altura-header);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--gelo);
+  background:
+    radial-gradient(90% 40% at 50% 0%, rgb(201 162 74 / .1), transparent 72%),
+    linear-gradient(180deg, rgb(5 10 20 / .94), rgb(3 8 18 / .98));
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: blur(20px) saturate(1.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .22s ease, visibility 0s linear .22s;
+}
+.cab-menu--aberto {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .32s var(--ease-out), visibility 0s;
+}
+@media (min-width: 1200px) {
+  .cab-menu { display: none; }
+}
+
+.cab-menu__fio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+  transition: transform .25s ease;
+}
+.cab-menu--aberto .cab-menu__fio { transform: none; transition: transform .9s var(--ease-out) .05s; }
+
+.cab-menu__nav { padding-top: clamp(12px, 3vh, 28px); }
+
+/* entrada escalonada: cada item sobe um pouco, uma vez por abertura */
+.cab-menu__item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .18s ease, transform .2s ease;
+}
+.cab-menu--aberto .cab-menu__item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity .5s var(--ease-out) calc(70ms + var(--i, 0) * 42ms),
+    transform .6s var(--ease-out) calc(70ms + var(--i, 0) * 42ms);
+}
+
+.cab-menu__link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 62px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgb(34 55 90 / .7);
+  color: var(--gelo);
+  font: 800 clamp(22px, 6.2vw, 30px)/1.1 var(--fonte-titulo);
+  letter-spacing: -.004em;
+  transition: color .25s ease;
+}
+.cab-menu__num {
+  flex: none;
+  min-width: 24px;
+  color: var(--ouro);
+  font: 600 12.5px/1 var(--fonte-rotulo);
+  letter-spacing: .12em;
+}
+.cab-menu__link .i {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  color: rgb(243 245 249 / .34);
+  transition: transform .35s var(--ease-out), color .25s ease;
+}
+.cab-menu__link:hover .i,
+.cab-menu__link:focus-visible .i { color: var(--ouro-claro); transform: translateX(4px); }
+.cab-menu__link[aria-current],
+.cab-menu__link[aria-current] .i { color: var(--ouro-claro); }
+
+.cab-menu__pe {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 32px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+.cab-menu__cta { width: 100%; min-height: 54px; }
+.cab-menu__vendedor {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 12px;
+  color: var(--prata);
+  font: 600 15px/1 var(--fonte-texto);
+}
+.cab-menu__vendedor .i { width: 18px; height: 18px; color: var(--ouro); }

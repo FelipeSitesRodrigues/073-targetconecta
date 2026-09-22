@@ -1,0 +1,89 @@
+/* ================================================================ 03 · Serviços
+   Escuro, como no mockup: intro à esquerda e cards de marinho com borda de aço à
+   direita, conteúdo centralizado (ícone dourado, título, texto e a pílula). No
+   celular os cards empilham com o ícone à esquerda, como no mockup mobile.       */
+
+.servicos__grade {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 80px);
+}
+.servicos__intro { padding-top: clamp(8px, 2vw, 32px); }
+.servicos__intro .texto-apoio { max-width: 34ch; margin-top: 18px; }
+
+.servicos__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.5vw, 20px);
+}
+.servico {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(26px, 2.4vw, 34px) clamp(20px, 2vw, 30px) clamp(24px, 2.2vw, 30px);
+  text-align: center;
+}
+.servico__icone { width: 50px; height: 50px; }
+.servico__titulo {
+  margin-top: 16px;
+  color: var(--gelo);
+  font: 700 clamp(19px, 17.5px + .35vw, 22px)/1.15 var(--fonte-forte);
+}
+.servico__texto {
+  max-width: 34ch;
+  margin-top: 10px;
+  margin-bottom: 22px;
+  color: var(--prata);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.servico__btn { margin-top: auto; }
+
+/* Operação completa: contorno e brilho dourados, com o selo no alto */
+.servico--destaque {
+  border-color: rgb(201 162 74 / .7);
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgb(201 162 74 / .12), transparent 70%),
+    linear-gradient(180deg, rgb(16 31 60 / .9), rgb(8 17 36 / .85));
+  box-shadow: 0 0 0 1px rgb(201 162 74 / .12), 0 22px 44px -28px rgb(201 162 74 / .45);
+}
+.servico__selo {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--ouro-gradiente);
+  color: var(--noite);
+  font: 700 12px/1 var(--fonte-rotulo);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- tablet */
+@media (max-width: 1023.98px) {
+  .servicos__grade { grid-template-columns: 1fr; }
+  .servicos__intro { padding-top: 0; }
+  .servicos__intro .texto-apoio { max-width: 52ch; }
+}
+
+/* ---------------------------------------------------------------- celular: ícone à esquerda, texto à direita */
+@media (max-width: 639.98px) {
+  .servicos__lista { grid-template-columns: 1fr; gap: 14px; }
+  .servico {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 16px;
+    padding: 22px 18px 22px 16px;
+    text-align: left;
+  }
+  .servico__icone { grid-row: 1 / span 3; width: 50px; height: 50px; margin-top: 2px; }
+  .servico__titulo { margin-top: 0; font-size: 20px; }
+  .servico__texto { margin: 8px 0 16px; font-size: 15px; }
+  .servico__btn { justify-self: start; }
+  .servico__selo { left: auto; right: 16px; translate: none; }
+}

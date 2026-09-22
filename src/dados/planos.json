@@ -1,0 +1,72 @@
+{
+  "_fonte": "Planos da Fleetnet conferidos no HTML do site dela em 22/09/2026 (copy-site.md, bloco 5). Preço igual em todas as cidades testadas. Mudou preço? Muda aqui e roda o build.",
+  "_pendente": "HOTGO (Advanced) fica fora do catálogo até o Rafael decidir se aparece num site B2B. Premium by Watch: confirmar se conta como app Premium nos combos.",
+  "categorias": {
+    "standard": {
+      "nome": "Standard",
+      "apps": ["Deezer", "Looke", "PlayKids", "Estuda+", "Ubook+", "Fluid", "+Q Nutri", "Kaspersky", "Hub Vantagens", "Sky+ Light", "NP Noping", "Playlist", "Pequenos Leitores", "Social Comics", "Ubook News", "Kiddle Pass", "Exitlag", "Revistaria", "Ubook GO"]
+    },
+    "premium": {
+      "nome": "Premium",
+      "apps": ["HBO Max", "Kaspersky", "Queima Diária", "Zen App", "Zen Wellness", "Smart Content", "Leitura 360"]
+    },
+    "watch": {
+      "nome": "Premium by Watch",
+      "apps": ["Combate + UP", "HBO Max + UP", "Telecine + UP"]
+    },
+    "advanced": {
+      "nome": "Advanced",
+      "apps": ["SKY+ com Globo", "SKY+ com Paramount", "CurtaOn", "Docway", "O Jornalista", "Ubook GO", "Kaspersky"]
+    },
+    "extra": {
+      "nome": "Extra",
+      "apps": ["Premiere"],
+      "nota": "Só no Combo Sport"
+    }
+  },
+  "vitrine": {
+    "advanced": ["SKY+ com Globo", "SKY+ com Paramount"],
+    "premium": ["HBO Max", "Queima Diária"],
+    "standard": ["Deezer", "Looke"]
+  },
+  "linhas": [
+    {
+      "id": "individuais",
+      "nome": "Planos individuais",
+      "naMensagem": "Plano individual",
+      "nota": "Internet com aplicativos. Aqui você escolhe um tipo de app: não dá pra misturar Advanced com Standard.",
+      "planos": [
+        { "mega": 1000, "preco": "119,99", "inclui": [["advanced", 1], ["standard", 2]], "juntar": "ou", "texto": "1 app Advanced ou 2 apps Standard", "mensagem": "plano individual de 1000 MEGA" },
+        { "mega": 750, "preco": "99,99", "inclui": [["advanced", 1], ["standard", 2]], "juntar": "ou", "texto": "1 app Advanced ou 2 apps Standard", "mensagem": "plano individual de 750 MEGA" },
+        { "mega": 500, "preco": "89,99", "inclui": [["advanced", 1], ["standard", 1]], "juntar": "ou", "texto": "1 app Advanced ou 1 app Standard", "mensagem": "plano individual de 500 MEGA" },
+        { "mega": 250, "preco": "79,99", "itens": ["250 Mega de download e de upload", "Franquia ilimitada", "Pacote de vantagens", "Roteador em comodato (sob consulta)"], "mensagem": "plano individual de 250 MEGA" }
+      ]
+    },
+    {
+      "id": "combo-basic",
+      "nome": "Combo Basic",
+      "naMensagem": "Combo Basic",
+      "planos": [
+        { "mega": 1000, "preco": "144,99", "inclui": [["premium", 1], ["standard", 2]], "juntar": "+", "texto": "1 app Premium + 2 apps Standard", "mensagem": "Combo Basic de 1000 MEGA" },
+        { "mega": 750, "preco": "124,99", "inclui": [["premium", 1], ["standard", 2]], "juntar": "+", "texto": "1 app Premium + 2 apps Standard", "mensagem": "Combo Basic de 750 MEGA" },
+        { "mega": 500, "preco": "119,99", "inclui": [["premium", 1], ["standard", 2]], "juntar": "+", "texto": "1 app Premium + 2 apps Standard", "mensagem": "Combo Basic de 500 MEGA" }
+      ]
+    },
+    {
+      "id": "combo-premium",
+      "nome": "Combo Premium",
+      "naMensagem": "Combo Premium",
+      "planos": [
+        { "mega": 1000, "preco": "169,99", "inclui": [["premium", 2], ["standard", 2]], "juntar": "+", "texto": "2 apps Premium + 2 apps Standard", "mensagem": "Combo Premium de 1000 MEGA" }
+      ]
+    },
+    {
+      "id": "combo-sport",
+      "nome": "Combo Sport",
+      "naMensagem": "Combo Sport",
+      "planos": [
+        { "mega": 750, "preco": "169,99", "inclui": [["extra", 1], ["premium", 1], ["standard", 2]], "juntar": "+", "texto": "Premiere + 1 app Premium + 2 apps Standard", "mensagem": "Combo Sport de 750 MEGA" }
+      ]
+    }
+  ]
+}

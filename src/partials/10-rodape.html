@@ -1,0 +1,51 @@
+  <!-- 10 · Rodapé (bloco 12 da copy). Separado do CTA por um fio dourado. Quatro
+       áreas no desktop (marca, navegação, contato e o bloco com o fio dourado do
+       mockup, aqui com a parceria e a Área do vendedor); blocos empilhados no celular.
+       CNPJ e Instagram só aparecem quando o config tiver (a confirmar com o Rafael). -->
+  <footer class="rodape escuro" aria-labelledby="rodape-titulo">
+    <div class="fio-ouro rodape__fio" aria-hidden="true"></div>
+    <h2 class="sr-only" id="rodape-titulo">Rodapé</h2>
+    <div class="container rodape__grade">
+      <div class="rodape__marca">
+        <img data-img="logo-horizontal" data-img-max="520" sizes="232px" alt="Target Connecta" loading="lazy" decoding="async">
+        <p>Conectando pessoas, empresas, serviços e vendas.</p>
+      </div>
+
+      <nav class="rodape__col" aria-labelledby="rodape-nav">
+        <h3 class="rodape__titulo" id="rodape-nav">Navegação</h3>
+        <ul class="rodape__links" role="list">
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#como-trabalhamos">Como trabalhamos</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#duvidas">Dúvidas</a></li>
+        </ul>
+      </nav>
+
+      <div class="rodape__col">
+        <h3 class="rodape__titulo">Contato</h3>
+        <address>
+          <ul class="rodape__contato" role="list">
+            <li><i data-i="whatsapp-logo" data-w="regular"></i><a href="{{wa:empresa}}" target="_blank" rel="noopener" data-zap="rodape">{{cfg.whatsappExibir}}</a></li>
+            <li><i data-i="envelope-simple" data-w="regular"></i><a href="mailto:{{cfg.email}}">{{cfg.email}}</a></li>
+            <li><i data-i="map-pin" data-w="regular"></i><a href="{{cfg.mapa}}" target="_blank" rel="noopener">{{cfg.endereco.rua}}, {{cfg.endereco.bairro}}, {{cfg.endereco.cidade}} ({{cfg.endereco.uf}}), CEP {{cfg.endereco.cep}}</a></li>
+            <li><i data-i="compass" data-w="regular"></i><span>Oeste paulista e Mato Grosso do Sul</span></li>
+            <!-- @se cfg.instagram -->
+            <li><i data-i="instagram-logo" data-w="regular"></i><a href="{{cfg.instagram}}" target="_blank" rel="noopener">Instagram</a></li>
+            <!-- /@se -->
+          </ul>
+        </address>
+      </div>
+
+      <div class="rodape__destaque">
+        <p class="rodape__selo"><i data-i="shield-check" data-w="regular"></i>Parceira oficial Fleetnet</p>
+        <p class="rodape__frase">Pessoas, vendas, conexões e resultados.</p>
+        <a class="rodape__vendedor" href="{{vendedor}}" target="_blank" rel="noopener" data-evento="vendedor" data-zap="rodape-vendedor"><i data-i="lock-simple" data-w="regular"></i>Área do vendedor</a>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      <p>© {{ano}} Target Connecta · Todos os direitos reservados<!-- @se cfg.cnpj --> · CNPJ {{cfg.cnpj}}<!-- /@se --></p>
+      <p>Site por <a href="{{cfg.credito}}" target="_blank" rel="noopener">Credialta Sites</a></p>
+    </div>
+  </footer>

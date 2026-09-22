@@ -1,0 +1,292 @@
+/* ---------------------------------------------------------------- tokens
+   Paleta do prompt técnico, conferida no mockup aprovado (fundo escuro medido
+   em #000C1C, claro em #F5F8FC). Cada seção escolhe o fundo com uma classe
+   (.secao--escura ou --clara) e o fundo acerta título, texto, rótulo e
+   destaque pelas variáveis --cor-*. Dourado é acento, nunca bloco de fundo.   */
+:root {
+  --noite: #050A14;
+  --noite-azul: #020B1A;
+  --marinho: #0D1A33;
+  --aco: #22375A;
+  --ouro: #C9A24A;
+  --ouro-claro: #EACB7C;
+  --ouro-escuro: #8C6B1F;
+  --prata: #C4CAD4;
+  --gelo: #F3F5F9;
+  --gelo-azul: #F4F7FB;
+  --branco: #FFFFFF;
+  --tinta: #0A1428;
+  --texto-claro: #465270;
+  --linha-clara: #DDE3EC;
+  --linha-escura: rgb(34 55 90 / .75);
+
+  --fonte-titulo: 'Archivo Titulo', 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
+  --fonte-forte: 'Archivo Forte', 'Arial Narrow', 'Roboto Condensed', system-ui, sans-serif;
+  --fonte-rotulo: 'Archivo Rotulo', 'Segoe UI', system-ui, sans-serif;
+  --fonte-texto: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --container: 1240px;
+  --margem: clamp(20px, 4.4vw, 64px);
+  --secao-y: clamp(64px, 7.4vw, 108px);
+  --altura-header: 80px;
+  --raio: 16px;
+  --raio-p: 12px;
+
+  --ouro-gradiente: linear-gradient(135deg, #F0D58F 0%, var(--ouro-claro) 34%, var(--ouro) 100%);
+  --sombra-card: 0 1px 2px rgb(10 20 40 / .04), 0 16px 36px -22px rgb(10 20 40 / .26);
+  --sombra-card-hover: 0 2px 4px rgb(10 20 40 / .05), 0 24px 44px -22px rgb(10 20 40 / .34);
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+
+  /* cores de contexto (fundo claro é o padrão) */
+  --cor-fundo: var(--gelo-azul);
+  --cor-titulo: var(--tinta);
+  --cor-texto: var(--texto-claro);
+  --cor-rotulo: var(--ouro-escuro);
+  --cor-destaque: var(--ouro-escuro);
+  --cor-icone: var(--ouro-escuro);
+  --cor-foco: var(--ouro-escuro);
+}
+@media (max-width: 1023.98px) {
+  :root { --altura-header: 68px; }
+}
+
+/* ---------------------------------------------------------------- reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--altura-header);
+  background: var(--noite);
+}
+body {
+  min-height: 100vh;
+  background: var(--noite);
+  color: var(--texto-claro);
+  font: 400 16px/1.62 var(--fonte-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img, picture, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; }
+h1, h2, h3, h4 { font-weight: inherit; font-size: inherit; line-height: inherit; }
+address { font-style: normal; }
+strong { font-weight: 700; }
+:focus-visible { outline: 2px solid var(--cor-foco); outline-offset: 3px; }
+
+.pular {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--ouro-gradiente);
+  color: var(--noite);
+  font: 700 15px/1 var(--fonte-forte);
+  transform: translateY(-160%);
+  transition: transform .2s var(--ease-out);
+}
+.pular:focus { transform: none; }
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container { width: min(var(--container), 100% - var(--margem) * 2); margin-inline: auto; }
+
+/* ---------------------------------------------------------------- fundos das seções */
+.secao { position: relative; padding-block: var(--secao-y); background: var(--cor-fundo); isolation: isolate; }
+/* claro: gelo com uma luz fria no alto, como o papel texturizado do mockup */
+.secao--clara {
+  --cor-fundo: var(--gelo-azul);
+  background:
+    radial-gradient(60% 70% at 12% 0%, rgb(255 255 255 / .95), transparent 70%),
+    radial-gradient(50% 60% at 100% 100%, rgb(214 224 238 / .55), transparent 70%),
+    var(--gelo-azul);
+}
+.secao--escura, .escuro {
+  --cor-fundo: var(--noite-azul);
+  --cor-titulo: var(--gelo);
+  --cor-texto: var(--prata);
+  --cor-rotulo: var(--ouro);
+  --cor-destaque: var(--ouro-claro);
+  --cor-icone: var(--ouro);
+  --cor-foco: var(--ouro-claro);
+  color: var(--cor-texto);
+}
+.secao--escura {
+  background:
+    radial-gradient(70% 90% at 88% 0%, rgb(20 38 74 / .55), transparent 65%),
+    radial-gradient(60% 80% at 0% 100%, rgb(13 26 51 / .6), transparent 70%),
+    var(--noite-azul);
+}
+
+/* ---------------------------------------------------------------- tipografia */
+.rotulo {
+  display: block;
+  color: var(--cor-rotulo);
+  font: 600 12.5px/1.35 var(--fonte-rotulo);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.titulo {
+  color: var(--cor-titulo);
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(1.95rem, 1.35rem + 1.7vw, 2.75rem);
+  line-height: 1.04;
+  letter-spacing: -.004em;
+  text-wrap: balance;
+}
+.rotulo + .titulo { margin-top: 12px; }
+.destaque { color: var(--cor-destaque); }
+.texto-apoio {
+  color: var(--cor-texto);
+  font-size: clamp(15.5px, 15px + .2vw, 17px);
+  line-height: 1.65;
+}
+
+/* cabeçalho de seção do mockup: rótulo e título à esquerda, texto de apoio à direita */
+.secao-cab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 18px 72px;
+  margin-bottom: clamp(32px, 3.6vw, 48px);
+}
+.secao-cab__apoio { max-width: 48ch; padding-bottom: 6px; }
+@media (max-width: 899.98px) {
+  .secao-cab { grid-template-columns: 1fr; }
+  .secao-cab__apoio { padding-bottom: 0; }
+}
+
+/* ---------------------------------------------------------------- botões (pílula) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  font: 700 16px/1.1 var(--fonte-forte);
+  letter-spacing: .01em;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .3s var(--ease-out), background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .35s var(--ease-out), filter .25s ease;
+}
+.btn .i { width: 22px; height: 22px; flex: none; }
+.btn .seta { width: 18px; height: 18px; transition: transform .3s var(--ease-out); }
+.btn:hover .seta { transform: translateX(3px); }
+.btn:active { transform: translateY(0) scale(.985); transition-duration: .1s; }
+
+.btn--ouro {
+  --cor-foco: var(--ouro-claro);
+  background: var(--ouro-gradiente);
+  color: var(--noite);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .45), 0 10px 26px -14px rgb(201 162 74 / .7);
+}
+.btn--ouro:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 14px 32px -14px rgb(201 162 74 / .85); }
+.btn--contorno-claro { border-color: rgb(243 245 249 / .9); color: var(--gelo); }
+.btn--contorno-claro:hover { border-color: var(--branco); background: rgb(255 255 255 / .07); transform: translateY(-1px); }
+.btn--contorno-ouro { border-color: var(--ouro); color: var(--ouro-claro); }
+.btn--contorno-ouro:hover { border-color: var(--ouro-claro); background: rgb(201 162 74 / .1); transform: translateY(-1px); }
+.btn--contorno-escuro { border-color: var(--tinta); color: var(--tinta); }
+.btn--contorno-escuro:hover { background: var(--tinta); color: var(--gelo); transform: translateY(-1px); }
+
+/* pílula pequena e contornada ("Falar sobre isso", "Ver como trabalhamos" nos cards) */
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1.25px solid var(--ouro);
+  border-radius: 999px;
+  color: var(--ouro-claro);
+  font: 700 14.5px/1.1 var(--fonte-forte);
+  letter-spacing: .01em;
+  white-space: nowrap;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .3s var(--ease-out);
+}
+.pilula .i { width: 17px; height: 17px; transition: transform .3s var(--ease-out); }
+.pilula:hover { background: rgb(201 162 74 / .12); border-color: var(--ouro-claro); transform: translateY(-1px); }
+.pilula:hover .i { transform: translateX(3px); }
+.secao--clara .pilula { border-color: rgb(140 107 31 / .75); color: var(--ouro-escuro); }
+.secao--clara .pilula:hover { background: rgb(140 107 31 / .08); border-color: var(--ouro-escuro); }
+
+/* ---------------------------------------------------------------- cards */
+.card {
+  position: relative;
+  border: 1px solid var(--linha-clara);
+  border-radius: var(--raio);
+  background: var(--branco);
+  box-shadow: var(--sombra-card);
+  transition: transform .3s var(--ease-out), box-shadow .35s var(--ease-out), border-color .25s ease;
+}
+.card--escuro {
+  border-color: var(--linha-escura);
+  background: linear-gradient(180deg, rgb(13 26 51 / .72), rgb(8 17 36 / .72));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .03);
+}
+@media (hover: hover) {
+  .card--sobe:hover { transform: translateY(-3px); box-shadow: var(--sombra-card-hover); border-color: #CDD6E3; }
+  .card--escuro.card--sobe:hover { box-shadow: 0 18px 40px -24px rgb(0 0 0 / .8), inset 0 1px 0 rgb(255 255 255 / .04); border-color: rgb(201 162 74 / .45); }
+}
+.icone { width: 44px; height: 44px; flex: none; color: var(--cor-icone); }
+
+/* filete dourado (a trajetória da flecha do logo): abre do centro ao entrar na tela */
+.fio-ouro {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ouro) 18%, var(--ouro-claro) 50%, var(--ouro) 82%, transparent);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- revelação no scroll
+   O padrão é visível. Só esconde com JS ligado e sem "reduzir movimento", e o
+   JS (_base.js) marca .visivel quando o elemento entra na tela.
+   Parado, tudo esconde SÓ com opacidade: o Chrome conta o clip-path no
+   IntersectionObserver e um elemento recortado a zero nunca "entra na tela"
+   (bug do 067). Recorte e escala ficam só no primeiro quadro da animação.
+   @keyframes com fill-mode backwards: acabou a entrada, o elemento volta ao
+   estilo normal e o hover não fica preso nela.                               */
+@keyframes revela-sobe { from { opacity: 0; transform: translateY(22px); } }
+@keyframes revela-foto { from { clip-path: inset(0 0 100% 0 round var(--raio)); } to { clip-path: inset(0 0 0 0 round var(--raio)); } }
+@keyframes revela-linha { from { transform: scaleX(0); } }
+@keyframes assenta { from { transform: scale(1.06); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revela]:not(.visivel) { opacity: 0; }
+  .js [data-revela].visivel { animation: revela-sobe .7s var(--ease-out) calc(var(--i, 0) * 70ms) backwards; }
+  .js [data-revela="foto"].visivel { animation: revela-foto 1.05s var(--ease-in-out) calc(var(--i, 0) * 70ms) backwards; }
+  .js [data-revela="foto"].visivel img { animation: assenta 1.5s var(--ease-out) calc(var(--i, 0) * 70ms) backwards; }
+  .js [data-revela="linha"].visivel { animation: revela-linha 1.3s var(--ease-out) backwards; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

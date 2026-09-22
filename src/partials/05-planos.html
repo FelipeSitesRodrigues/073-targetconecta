@@ -1,0 +1,77 @@
+<!-- 05 · Planos Target Connecta (bloco 5 da copy). Entra no lugar do "Cliente em
+     destaque" do mockup, no mesmo fundo escuro, com cards no estilo dos de serviço e
+     o botão de assinar em dourado. Sem nome nem logo da Fleetnet nesta seção.
+     Abas, cards e catálogo saem de src/dados/planos.json no build (marcadores
+     @planos e @catalogo abaixo). -->
+<section class="secao secao--escura planos" id="planos" aria-labelledby="planos-titulo">
+  <div class="container">
+    <header class="secao-cab">
+      <div data-revela>
+        <span class="rotulo">Planos Target Connecta</span>
+        <h2 class="titulo" id="planos-titulo">Internet com <span class="destaque">aplicativos inclusos.</span></h2>
+      </div>
+      <p class="secao-cab__apoio texto-apoio" data-revela style="--i:1">Escolha a velocidade e os aplicativos. Pra assinar, é só chamar a Target no WhatsApp.</p>
+    </header>
+
+    <div class="planos__corpo" data-revela style="--i:2">
+      <!-- @planos -->
+    </div>
+
+    <div class="planos__pe">
+      <button class="btn btn--contorno-ouro planos__todos" type="button" data-catalogo aria-haspopup="dialog"><i data-i="squares-four" data-w="regular"></i>Ver todos os aplicativos</button>
+      <p class="planos__aviso">Disponível nas cidades atendidas pela Target. Instalação sujeita à viabilidade técnica no endereço.</p>
+    </div>
+  </div>
+
+  <dialog class="janela catalogo escuro" id="catalogo" aria-labelledby="catalogo-titulo">
+    <div class="janela__caixa">
+      <header class="janela__cab">
+        <div>
+          <span class="rotulo">Planos Target Connecta</span>
+          <h3 class="janela__titulo" id="catalogo-titulo">Catálogo de aplicativos</h3>
+        </div>
+        <button class="janela__fechar" type="button" data-fechar aria-label="Fechar o catálogo"><i data-i="x" data-w="regular"></i></button>
+      </header>
+      <p class="catalogo__nota">Cada plano diz quantos apps de cada tipo entram. Nos planos individuais, você escolhe um tipo só: não dá pra misturar Advanced com Standard.</p>
+      <div class="catalogo__grupos">
+        <!-- @catalogo -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Formulário do "Assinar pelo WhatsApp": o JS preenche o plano (data-plano) e,
+       no envio, monta a mensagem de cadastro (mensagens.cadastroPlano do config) e
+       abre o WhatsApp da Target. -->
+  <dialog class="janela assinar escuro" id="assinar" aria-labelledby="assinar-titulo" aria-describedby="assinar-resumo">
+    <div class="janela__caixa">
+      <header class="janela__cab">
+        <div>
+          <span class="rotulo">Assinar plano</span>
+          <h3 class="janela__titulo" id="assinar-titulo"><span data-plano="mega"></span> Mega</h3>
+          <p class="assinar__resumo" id="assinar-resumo"><strong>R$ <span data-plano="preco"></span></strong>/mês · <span data-plano="linha"></span></p>
+        </div>
+        <button class="janela__fechar" type="button" data-fechar aria-label="Fechar o formulário"><i data-i="x" data-w="regular"></i></button>
+      </header>
+      <form class="assinar__form" novalidate data-numero="{{cfg.whatsapp}}" data-modelo="{{attr:cfg.mensagens.cadastroPlano}}">
+        <p class="assinar__nota">Preencha seus dados e a conversa abre no WhatsApp da Target, já com o plano escolhido.</p>
+        <div class="campo">
+          <label class="campo__rotulo" for="assinar-nome">Nome</label>
+          <input class="campo__entrada" id="assinar-nome" name="nome" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" maxlength="80" placeholder="Nome e sobrenome" required>
+          <p class="campo__erro" id="assinar-nome-erro" hidden><i data-i="warning-circle" data-w="regular"></i>Escreva seu nome.</p>
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo" for="assinar-telefone">Telefone com DDD</label>
+          <input class="campo__entrada" id="assinar-telefone" name="telefone" type="tel" autocomplete="tel" enterkeyhint="next" maxlength="25" placeholder="(18) 99999-9999" required>
+          <p class="campo__erro" id="assinar-telefone-erro" hidden><i data-i="warning-circle" data-w="regular"></i>Confira o telefone, com DDD.</p>
+        </div>
+        <div class="campo">
+          <label class="campo__rotulo" for="assinar-email">E-mail</label>
+          <input class="campo__entrada" id="assinar-email" name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send" maxlength="120" placeholder="voce@email.com" required>
+          <p class="campo__erro" id="assinar-email-erro" hidden><i data-i="warning-circle" data-w="regular"></i>Confira o e-mail.</p>
+        </div>
+        <button class="btn btn--ouro assinar__enviar" type="submit"><i data-i="whatsapp-logo" data-w="regular"></i>Continuar no WhatsApp</button>
+        <p class="assinar__privacidade"><i data-i="lock-simple" data-w="regular"></i>Seus dados vão só pra Target, pra falar da sua assinatura.</p>
+      </form>
+    </div>
+  </dialog>
+</section>

@@ -1,0 +1,111 @@
+/* ================================================================ 07 · Diferenciais
+   Desktop (1200+): a foto do time sangra na esquerda inteira, na proporção dela
+   (os quatro aparecem, sem ampliar), e apaga pro azul-noite em cima, embaixo e na
+   direita; título e itens ficam à direita, em lista, alinhados à borda do container.
+   Até 1199: título, itens em cards escuros (ícone à esquerda) e a foto no fim,
+   na largura toda, como no mockup mobile.                                        */
+
+.dif { display: flex; flex-direction: column; padding-block: 0; overflow: clip; }
+.dif__grade { order: 1; padding-block: var(--secao-y) 36px; }
+
+.dif__foto {
+  order: 2;
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1320 / 830;
+  background: var(--marinho);
+}
+.dif__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.dif__foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--noite-azul) 0%, rgb(2 11 26 / .35) 22%, rgb(2 11 26 / 0) 45%),
+    linear-gradient(0deg, rgb(2 11 26 / .5) 0%, rgb(2 11 26 / 0) 30%);
+}
+
+.dif__lista {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+.dif__item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 20px 18px;
+  border: 1px solid var(--linha-escura);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgb(13 26 51 / .7), rgb(8 17 36 / .7));
+}
+.dif__icone { width: 46px; height: 46px; }
+.dif__titulo { color: var(--gelo); font: 700 19px/1.2 var(--fonte-forte); }
+.dif__texto { margin-top: 6px; color: var(--prata); font-size: 15px; line-height: 1.5; }
+
+@media (min-width: 640px) and (max-width: 1199.98px) {
+  .dif__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* o quinto sobra sozinho na última linha: vai pro meio */
+  .dif__item:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
+}
+/* na largura toda, a foto passaria de 700 px de altura: corta céu e cintura */
+@media (min-width: 900px) and (max-width: 1199.98px) {
+  .dif__foto { max-height: 600px; }
+}
+
+/* ================================================================ 1200+ */
+/* A foto é paisagem (o time lado a lado). Presa à altura da seção, ela precisava
+   ampliar e cortar metade do time. Aqui ela fica na proporção dela: sangra na
+   esquerda até a borda da tela e se apoia no pé da seção, com o título em cima e a
+   lista à direita. O céu e o ombro do último somem no fundo por máscara (sem véu
+   por cima, então não sobra emenda de cor). Os embrulhos do título e da lista viram
+   display: contents pra cada um ir pra sua área do grid. */
+@media (min-width: 1200px) {
+  .dif {
+    --lateral: max(var(--margem), (100% - var(--container)) / 2);
+    display: grid;
+    grid-template-columns: var(--lateral) minmax(0, 56fr) minmax(0, 44fr) var(--lateral);
+    grid-template-rows: auto 1fr;
+    padding-block: var(--secao-y);
+  }
+  .dif__grade, .dif__conteudo { display: contents; }
+  .dif__conteudo > header { grid-area: 1 / 2 / 2 / 3; }
+  .dif__foto {
+    grid-area: 2 / 1 / 3 / 3;
+    align-self: end;
+    margin: clamp(28px, 3vw, 44px) 0 calc(-1 * var(--secao-y));
+    background: none;
+    --mascara-x: linear-gradient(90deg, #000 84%, rgb(0 0 0 / .55) 93%, transparent);
+    --mascara-y: linear-gradient(180deg, transparent, rgb(0 0 0 / .35) 7%, rgb(0 0 0 / .85) 13%, #000 18%);
+    -webkit-mask-image: var(--mascara-x), var(--mascara-y);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--mascara-x), var(--mascara-y);
+    mask-composite: intersect;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  /* a borda direita cai no meio de um pixel (842,4 px x 1,25) e o Chrome não passa a
+     máscara nesse pixel parcial: sobrava um risco claro. A foto termina 2 px antes. */
+  .dif__foto img { width: calc(100% - 2px); object-position: 50% 50%; }
+  .dif__foto::after { content: none; }
+  /* no desktop os itens viram lista solta, sem card, separada por fio */
+  .dif__lista {
+    grid-area: 1 / 3 / 3 / 4;
+    align-self: center;
+    gap: 0;
+    margin: 0;
+    padding-left: clamp(40px, 3.6vw, 64px);
+  }
+  .dif__item {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 20px;
+    padding: 18px 0;
+    border: 0;
+    border-top: 1px solid var(--linha-escura);
+    border-radius: 0;
+    background: none;
+  }
+  .dif__icone { width: 38px; height: 38px; }
+  .dif__texto { margin-top: 4px; font-size: 14.5px; }
+}

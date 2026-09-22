@@ -1,0 +1,142 @@
+{
+ "hero-desktop-960.avif": {
+  "w": 960,
+  "h": 540,
+  "kb": 21
+ },
+ "hero-desktop-960.webp": {
+  "w": 960,
+  "h": 540,
+  "kb": 29
+ },
+ "hero-desktop-1280.avif": {
+  "w": 1280,
+  "h": 720,
+  "kb": 30
+ },
+ "hero-desktop-1280.webp": {
+  "w": 1280,
+  "h": 720,
+  "kb": 43
+ },
+ "hero-desktop-1672.avif": {
+  "w": 1672,
+  "h": 941,
+  "kb": 43
+ },
+ "hero-desktop-1672.webp": {
+  "w": 1672,
+  "h": 941,
+  "kb": 61
+ },
+ "hero-celular-480.avif": {
+  "w": 480,
+  "h": 853,
+  "kb": 17
+ },
+ "hero-celular-480.webp": {
+  "w": 480,
+  "h": 853,
+  "kb": 25
+ },
+ "hero-celular-720.avif": {
+  "w": 720,
+  "h": 1279,
+  "kb": 29
+ },
+ "hero-celular-720.webp": {
+  "w": 720,
+  "h": 1279,
+  "kb": 42
+ },
+ "hero-celular-800.avif": {
+  "w": 800,
+  "h": 1421,
+  "kb": 33
+ },
+ "hero-celular-800.webp": {
+  "w": 800,
+  "h": 1421,
+  "kb": 47
+ },
+ "hero-celular-941.avif": {
+  "w": 941,
+  "h": 1672,
+  "kb": 41
+ },
+ "hero-celular-941.webp": {
+  "w": 941,
+  "h": 1672,
+  "kb": 58
+ },
+ "logo-horizontal-260.webp": {
+  "w": 260,
+  "h": 56,
+  "kb": 10
+ },
+ "logo-horizontal-400.webp": {
+  "w": 400,
+  "h": 86,
+  "kb": 16
+ },
+ "logo-horizontal-520.webp": {
+  "w": 520,
+  "h": 112,
+  "kb": 22
+ },
+ "logo-horizontal-780.webp": {
+  "w": 780,
+  "h": 168,
+  "kb": 34
+ },
+ "logo-empilhado-600.png": {
+  "w": 600,
+  "h": 380,
+  "kb": 201
+ },
+ "fundadores-band-480.webp": {
+  "w": 480,
+  "h": 324,
+  "kb": 18
+ },
+ "fundadores-band-720.webp": {
+  "w": 720,
+  "h": 486,
+  "kb": 30
+ },
+ "fundadores-band-960.webp": {
+  "w": 960,
+  "h": 648,
+  "kb": 41
+ },
+ "fundadores-band-1280.webp": {
+  "w": 1280,
+  "h": 865,
+  "kb": 57
+ },
+ "equipe-480.webp": {
+  "w": 480,
+  "h": 302,
+  "kb": 11
+ },
+ "equipe-720.webp": {
+  "w": 720,
+  "h": 453,
+  "kb": 17
+ },
+ "equipe-960.webp": {
+  "w": 960,
+  "h": 604,
+  "kb": 24
+ },
+ "equipe-1320.webp": {
+  "w": 1320,
+  "h": 830,
+  "kb": 36
+ },
+ "og-target-connecta.jpg": {
+  "w": 1200,
+  "h": 630,
+  "kb": 72
+ }
+}

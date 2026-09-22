@@ -1,0 +1,41 @@
+<!-- 03 · Serviços (bloco 4 da copy). Mockup: intro à esquerda e os cards escuros à
+     direita. A copy tem 4 serviços, então os cards vão em 2x2; a Operação completa
+     leva o contorno dourado de destaque. Cada botão abre o WhatsApp com a mensagem
+     daquele serviço (regra da casa). -->
+<section class="secao secao--escura servicos" id="servicos" aria-labelledby="servicos-titulo">
+  <div class="container servicos__grade">
+    <header class="servicos__intro" data-revela>
+      <span class="rotulo">O que a Target faz pela sua empresa</span>
+      <h2 class="titulo" id="servicos-titulo">No telefone, no WhatsApp e <span class="destaque">na rua.</span></h2>
+      <p class="texto-apoio">Nascemos vendendo telecom, e é onde o time é mais forte.</p>
+    </header>
+
+    <ul class="servicos__lista" role="list">
+      <li class="card card--escuro card--sobe servico" data-revela>
+        <i data-i="headset" class="icone servico__icone"></i>
+        <h3 class="servico__titulo">Telemarketing e televendas</h3>
+        <p class="servico__texto">Equipe no telefone e no WhatsApp que liga, atende, tira dúvida e fecha a venda ou agenda a visita.</p>
+        <a class="pilula servico__btn" href="{{wa:telemarketing}}" target="_blank" rel="noopener" data-zap="servico-telemarketing">Falar sobre isso<i data-i="arrow-right" data-w="regular"></i></a>
+      </li>
+      <li class="card card--escuro card--sobe servico" data-revela style="--i:1">
+        <i data-i="house-line" class="icone servico__icone"></i>
+        <h3 class="servico__titulo">Venda porta a porta</h3>
+        <p class="servico__texto">Time uniformizado visitando casa por casa e comércio por comércio, até a venda sair aprovada e com a instalação agendada.</p>
+        <a class="pilula servico__btn" href="{{wa:portaAPorta}}" target="_blank" rel="noopener" data-zap="servico-porta-a-porta">Falar sobre isso<i data-i="arrow-right" data-w="regular"></i></a>
+      </li>
+      <li class="card card--escuro card--sobe servico servico--destaque" data-revela style="--i:2">
+        <span class="servico__selo">Telefone e rua juntos</span>
+        <i data-i="path" class="icone servico__icone"></i>
+        <h3 class="servico__titulo">Operação completa</h3>
+        <p class="servico__texto">O telemarketing qualifica e agenda, e o vendedor fecha na porta.</p>
+        <a class="pilula servico__btn" href="{{wa:operacaoCompleta}}" target="_blank" rel="noopener" data-zap="servico-operacao-completa">Falar sobre isso<i data-i="arrow-right" data-w="regular"></i></a>
+      </li>
+      <li class="card card--escuro card--sobe servico" data-revela style="--i:3">
+        <i data-i="city" class="icone servico__icone"></i>
+        <h3 class="servico__titulo">Abertura de cidade nova</h3>
+        <p class="servico__texto">Chegou numa cidade sem cliente? A gente estuda população, domicílios e bairros, e entra com o time pra construir a base do zero.</p>
+        <a class="pilula servico__btn" href="{{wa:cidadeNova}}" target="_blank" rel="noopener" data-zap="servico-cidade-nova">Falar sobre isso<i data-i="arrow-right" data-w="regular"></i></a>
+      </li>
+    </ul>
+  </div>
+</section>

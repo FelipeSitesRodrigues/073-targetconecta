@@ -1,0 +1,37 @@
+<!-- 06 · Onde atuamos (bloco 9 da copy). Claro, como no mockup: texto à esquerda,
+     mapa no meio e o card escuro à direita. O mapa sai das malhas do IBGE
+     (scripts/gerar-mapa.mjs), com as cidades que o material da Target cita.
+     Sem o número de cidades até o Rafael confirmar (copy, bloco 14). -->
+<section class="secao secao--clara onde" id="onde-atuamos" aria-labelledby="onde-titulo">
+  <div class="container onde__grade">
+    <header class="onde__texto" data-revela>
+      <span class="rotulo">Onde estamos</span>
+      <h2 class="titulo" id="onde-titulo">Oeste paulista e Mato Grosso do Sul.</h2>
+      <p class="texto-apoio">Presença comercial a partir de Presidente Prudente. Cidade nova entra com estudo de praça antes.</p>
+    </header>
+    <div class="onde__acao" data-revela style="--i:1">
+      <a class="pilula onde__btn" href="{{wa:cidadeNova}}" target="_blank" rel="noopener" data-zap="onde-cidade-nova">Falar sobre cidade nova<i data-i="arrow-right" data-w="regular"></i></a>
+    </div>
+
+    <div class="onde__mapa" data-revela style="--i:1">
+      <!-- @parcial _mapa -->
+    </div>
+
+    <ul class="onde__card escuro" role="list" data-revela style="--i:2">
+      <li class="onde__item">
+        <i data-i="map-pin" class="onde__icone"></i>
+        <div>
+          <strong class="onde__item-titulo">Base em Presidente Prudente (SP)</strong>
+          <a class="onde__item-texto onde__endereco" href="{{cfg.mapa}}" target="_blank" rel="noopener">{{cfg.endereco.rua}}, {{cfg.endereco.bairro}}</a>
+        </div>
+      </li>
+      <li class="onde__item">
+        <i data-i="target" class="onde__icone"></i>
+        <div>
+          <strong class="onde__item-titulo">Presença comercial</strong>
+          <span class="onde__item-texto">Presidente Prudente, Rancharia, Teodoro Sampaio, Quatá, João Ramalho e região</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

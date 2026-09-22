@@ -1,0 +1,56 @@
+<!-- @head -->
+<link rel="preload" as="image" type="image/avif" fetchpriority="high" media="(max-width: 767.98px)" imagesrcset="/assets/img/hero-celular-480.avif 480w, /assets/img/hero-celular-720.avif 720w, /assets/img/hero-celular-800.avif 800w,/assets/img/hero-celular-941.avif 941w" imagesizes="100vw">
+<link rel="preload" as="image" type="image/avif" fetchpriority="high" media="(min-width: 768px)" imagesrcset="/assets/img/hero-desktop-960.avif 960w, /assets/img/hero-desktop-1280.avif 1280w, /assets/img/hero-desktop-1672.avif 1672w" imagesizes="100vw">
+<!-- /@head -->
+<!-- 01 · Hero + faixa de prova. Desktop: a foto sangra o hero todo e o texto fica no
+     lado escuro dela. Celular (ordem da casa): título sobre o alto escuro da foto
+     vertical, o time aparece logo abaixo, depois subtítulo e botões. -->
+<section class="secao secao--escura hero" id="inicio" aria-labelledby="hero-titulo">
+  <picture class="hero__foto">
+    <source type="image/avif" media="(max-width: 767.98px)" width="941" height="1672" sizes="100vw" srcset="/assets/img/hero-celular-480.avif 480w, /assets/img/hero-celular-720.avif 720w, /assets/img/hero-celular-800.avif 800w,/assets/img/hero-celular-941.avif 941w">
+    <source type="image/webp" media="(max-width: 767.98px)" width="941" height="1672" sizes="100vw" srcset="/assets/img/hero-celular-480.webp 480w, /assets/img/hero-celular-720.webp 720w, /assets/img/hero-celular-800.webp 800w,/assets/img/hero-celular-941.webp 941w">
+    <source type="image/avif" sizes="100vw" srcset="/assets/img/hero-desktop-960.avif 960w, /assets/img/hero-desktop-1280.avif 1280w, /assets/img/hero-desktop-1672.avif 1672w">
+    <img src="/assets/img/hero-desktop-1280.webp" srcset="/assets/img/hero-desktop-960.webp 960w, /assets/img/hero-desktop-1280.webp 1280w, /assets/img/hero-desktop-1672.webp 1672w" sizes="100vw" width="1672" height="941" alt="Time de telemarketing de headset numa central com o logo da Target Connecta na parede" fetchpriority="high" decoding="async">
+  </picture>
+
+  <div class="container hero__conteudo">
+    <h1 class="hero__h1" id="hero-titulo">
+      <span class="rotulo hero__rotulo">Terceirização comercial · Telemarketing · Porta a porta</span>
+      <span class="hero__titulo">
+        <span class="hero__verso">Do telefone</span>
+        <span class="hero__verso">à porta, até o</span>
+        <span class="hero__verso hero__ouro">cliente instalado.</span>
+      </span>
+    </h1>
+
+    <p class="hero__sub">A Target Connecta monta, treina e supervisiona o time que vende o seu produto no telefone, no WhatsApp e na porta do cliente.</p>
+
+    <div class="hero__acoes">
+      <a class="btn btn--ouro hero__btn" href="{{wa:empresa}}" target="_blank" rel="noopener" data-zap="hero"><i data-i="whatsapp-logo" data-w="regular"></i>Vender sem montar equipe</a>
+      <a class="btn btn--contorno-claro hero__btn" href="#como-trabalhamos">Ver como trabalhamos</a>
+    </div>
+
+    <p class="hero__nota">Conversa pelo WhatsApp · Telemarketing e equipe de rua · Parceira oficial Fleetnet</p>
+  </div>
+
+  <div class="hero__prova">
+    <ul class="container hero__prova-lista" role="list">
+      <li class="hero__prova-item" data-revela>
+        <i data-i="handshake" class="hero__prova-icone"></i>
+        <span class="hero__prova-titulo">Equipe própria <br>e treinada</span>
+      </li>
+      <li class="hero__prova-item" data-revela>
+        <i data-i="chart-line-up" class="hero__prova-icone"></i>
+        <span class="hero__prova-titulo">Processo comercial <br>estruturado</span>
+      </li>
+      <li class="hero__prova-item" data-revela>
+        <i data-i="shield-check" class="hero__prova-icone"></i>
+        <span class="hero__prova-titulo">Canal exclusivo da Fleetnet <br>na venda porta a porta</span>
+      </li>
+      <li class="hero__prova-item" data-revela>
+        <i data-i="map-pin" class="hero__prova-icone"></i>
+        <span class="hero__prova-titulo">Atuação no oeste paulista <br>e Mato Grosso do Sul</span>
+      </li>
+    </ul>
+  </div>
+</section>

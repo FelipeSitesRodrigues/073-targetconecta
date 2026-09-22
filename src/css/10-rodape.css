@@ -1,0 +1,89 @@
+/* ================================================================ 10 · Rodapé
+   Noite, com o fio dourado em cima separando do CTA. Desktop: marca, navegação,
+   contato e o bloco com o fio dourado vertical do mockup. Celular: blocos
+   empilhados, marca centralizada, como no mockup mobile.                         */
+
+.rodape {
+  position: relative;
+  padding: clamp(48px, 5vw, 72px) 0 max(28px, env(safe-area-inset-bottom));
+  background: #010812;
+  color: var(--prata);
+  font-size: 14.5px;
+}
+.rodape__fio { position: absolute; top: 0; left: 0; right: 0; }
+
+.rodape__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr) minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 36px clamp(24px, 3.4vw, 56px);
+}
+.rodape__marca img { width: 232px; height: auto; }
+.rodape__marca p { max-width: 26ch; margin-top: 16px; line-height: 1.55; }
+
+.rodape__titulo { margin-bottom: 14px; color: var(--gelo); font: 700 16px/1.2 var(--fonte-forte); }
+.rodape__links { display: grid; gap: 4px; }
+.rodape__links a,
+.rodape__contato a { transition: color .25s ease; }
+.rodape__links a { display: inline-flex; min-height: 30px; align-items: center; }
+.rodape__links a:hover,
+.rodape__contato a:hover { color: var(--ouro-claro); }
+
+.rodape__contato { display: grid; gap: 12px; }
+.rodape__contato li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.5; }
+.rodape__contato .i { width: 20px; height: 20px; margin-top: 1px; color: var(--ouro); }
+.rodape__contato a { overflow-wrap: anywhere; }
+
+/* bloco da direita: o fio dourado vertical do mockup */
+.rodape__destaque {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 12px;
+  padding-left: 22px;
+  border-left: 2px solid var(--ouro);
+}
+.rodape__selo { display: inline-flex; align-items: center; gap: 9px; color: var(--gelo); font: 700 16px/1.25 var(--fonte-forte); }
+.rodape__selo .i { width: 22px; height: 22px; color: var(--ouro); }
+.rodape__frase { line-height: 1.5; }
+.rodape__vendedor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  margin-top: 4px;
+  padding: 0 16px;
+  border: 1px solid var(--linha-escura);
+  border-radius: 999px;
+  color: var(--gelo);
+  font: 600 14px/1 var(--fonte-texto);
+  transition: border-color .25s ease, color .25s ease;
+}
+.rodape__vendedor .i { width: 16px; height: 16px; color: var(--ouro); }
+.rodape__vendedor:hover { border-color: var(--ouro); color: var(--ouro-claro); }
+
+.rodape__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: clamp(36px, 4vw, 52px);
+  padding-top: 22px;
+  border-top: 1px solid rgb(34 55 90 / .6);
+  color: rgb(196 202 212 / .75);
+  font-size: 13px;
+}
+.rodape__base a { color: var(--prata); text-decoration: underline; text-decoration-color: rgb(196 202 212 / .35); text-underline-offset: 3px; }
+.rodape__base a:hover { color: var(--ouro-claro); }
+
+/* ---------------------------------------------------------------- tablet */
+@media (max-width: 1023.98px) {
+  .rodape__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------------------------------------------------------------- celular */
+@media (max-width: 599.98px) {
+  .rodape__grade { grid-template-columns: 1fr; gap: 32px; }
+  .rodape__marca { display: grid; justify-items: center; text-align: center; }
+  .rodape__marca img { width: 210px; }
+  .rodape__base { flex-direction: column; }
+}

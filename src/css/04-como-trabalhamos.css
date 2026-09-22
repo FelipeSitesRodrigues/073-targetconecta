@@ -1,0 +1,166 @@
+/* ================================================================ 04 · Como trabalhamos
+   Desktop: 5 passos em linha, número no círculo dourado e conector fino com seta
+   entre eles (como no mockup). Acima, colchetes finos marcam as três fases do
+   método. Celular: linha do tempo vertical, número à esquerda num fio dourado e o
+   passo num card branco à direita.                                              */
+
+/* ---------------------------------------------------------------- fases (colchetes) */
+.como__fases {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 clamp(16px, 2vw, 28px);
+  margin-bottom: 18px;
+}
+.como__fase {
+  position: relative;
+  padding-bottom: 12px;
+  color: var(--ouro-escuro);
+  font: 600 12px/1 var(--fonte-rotulo);
+  letter-spacing: .18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* colchete: fio embaixo do nome com as pontas descendo */
+.como__fase::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 0;
+  height: 7px;
+  border: 1px solid rgb(140 107 31 / .55);
+  border-bottom: 0;
+  border-radius: 4px 4px 0 0;
+}
+.como__fase--visao { grid-column: 1; }
+.como__fase--plano { grid-column: 2 / 4; }
+.como__fase--acao { grid-column: 4 / 6; }
+
+/* ---------------------------------------------------------------- passos */
+.passos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  counter-reset: passo;
+}
+.passo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.passo__fase {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.passo__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #D8AE55, #A97B22 70%, #8C6B1F);
+  color: var(--branco);
+  font: 800 20px/1 var(--fonte-titulo);
+  box-shadow: 0 0 0 5px var(--gelo-azul), 0 0 0 6px rgb(140 107 31 / .25), 0 10px 20px -10px rgb(140 107 31 / .7);
+}
+/* conector até o próximo passo: fio que acende da esquerda e termina em seta */
+.passo:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: calc(50% + 34px);
+  width: calc(100% + clamp(16px, 2vw, 28px) - 68px);
+  height: 1px;
+  background: linear-gradient(90deg, rgb(140 107 31 / .1), var(--ouro) 70%);
+}
+.passo:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: calc(50% + 34px + 100% + clamp(16px, 2vw, 28px) - 68px - 6px);
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--ouro);
+  border-right: 1px solid var(--ouro);
+  transform: rotate(45deg);
+}
+.passo__corpo { margin-top: 18px; }
+.passo__titulo {
+  color: var(--tinta);
+  font: 700 clamp(18px, 16.5px + .3vw, 20px)/1.15 var(--fonte-forte);
+}
+.passo__texto {
+  margin-top: 8px;
+  color: var(--texto-claro);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .passo.visivel::after { animation: revela-linha 1s var(--ease-out) calc(var(--i, 0) * 70ms + 250ms) backwards; transform-origin: 0 50%; }
+}
+
+/* ---------------------------------------------------------------- tablet e celular: linha do tempo vertical */
+@media (max-width: 1023.98px) {
+  .como__fases { display: none; }
+  .passos {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 640px;
+  }
+  /* o fio dourado que liga os números, do primeiro ao último */
+  .passos::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    bottom: 60px;
+    left: 22px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--ouro), rgb(140 107 31 / .35));
+  }
+  .passo {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: start;
+    text-align: left;
+  }
+  .passo:not(:last-child)::after,
+  .passo:not(:last-child)::before { content: none; }
+  .passo__fase {
+    position: static;
+    grid-column: 2;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    margin: 10px 0 2px;
+    color: var(--ouro-escuro);
+    font: 600 12px/1 var(--fonte-rotulo);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .passo:first-child .passo__fase { margin-top: 0; }
+  .passo__num { grid-column: 1; margin-top: 14px; }
+  .passo__fase + .passo__num { grid-row: 2; }
+  .passo__corpo {
+    grid-column: 2;
+    margin-top: 0;
+    padding: 18px 20px 20px;
+    border: 1px solid var(--linha-clara);
+    border-radius: 14px;
+    background: var(--branco);
+    box-shadow: var(--sombra-card);
+  }
+  .passo__fase + .passo__num + .passo__corpo { grid-row: 2; }
+  .passo__texto { font-size: 15.5px; }
+}
