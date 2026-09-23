@@ -263,7 +263,7 @@ function schema() {
     '@type': 'ProfessionalService',
     name: cfg.nome,
     slogan: 'Do telefone à porta, até o cliente instalado.',
-    description: 'Terceirização comercial: telemarketing, televendas e venda porta a porta com time treinado e supervisionado, no oeste paulista e no Mato Grosso do Sul.',
+    description: 'Terceirização comercial: telemarketing, televendas e venda porta a porta com time treinado e supervisionado, no oeste paulista e no Mato Grosso do Sul. Agente autorizado da Fleetnet, com exclusividade na comercialização: o serviço de internet é fornecido pela Fleetnet, a provedora.',
     telephone: `+${cfg.whatsapp}`,
     email: cfg.email || undefined,
     address: {

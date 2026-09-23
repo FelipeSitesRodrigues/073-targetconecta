@@ -11,6 +11,12 @@
   --ouro: #C9A24A;
   --ouro-claro: #EACB7C;
   --ouro-escuro: #8C6B1F;
+  /* azul da Fleetnet (medido no site dela): é a provedora, marca diferente da
+     Target. Entra só onde o site fala dela, pra ninguém confundir quem é quem.
+     O gradiente do botão começa escuro o bastante pra aguentar texto branco. */
+  --azul-fleet: #0070B3;
+  --azul-fleet-escuro: #004169;
+  --azul-claro: #57B6EA;
   --prata: #C4CAD4;
   --gelo: #F3F5F9;
   --gelo-azul: #F4F7FB;
@@ -33,6 +39,7 @@
   --raio-p: 12px;
 
   --ouro-gradiente: linear-gradient(135deg, #F0D58F 0%, var(--ouro-claro) 34%, var(--ouro) 100%);
+  --azul-gradiente: linear-gradient(135deg, #0B79BB 0%, var(--azul-fleet) 42%, #005281 100%);
   --sombra-card: 0 1px 2px rgb(10 20 40 / .04), 0 16px 36px -22px rgb(10 20 40 / .26);
   --sombra-card-hover: 0 2px 4px rgb(10 20 40 / .05), 0 24px 44px -22px rgb(10 20 40 / .34);
   --ease-out: cubic-bezier(.23, 1, .32, 1);

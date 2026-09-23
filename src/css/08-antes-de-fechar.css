@@ -77,6 +77,7 @@
 .faq__sinal::after { transform: rotate(90deg); }
 .faq__item[open] .faq__sinal::after { transform: rotate(0); }
 .faq__resposta { padding: 0 44px 20px 0; color: var(--texto-claro); font-size: 15.5px; line-height: 1.6; }
+.faq__resposta strong { color: var(--tinta); }
 .faq__link { color: var(--ouro-escuro); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .faq__link:hover { color: var(--tinta); }
 @media (prefers-reduced-motion: no-preference) {

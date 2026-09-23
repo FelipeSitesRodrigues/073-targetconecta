@@ -1,25 +1,40 @@
-<!-- 05 · Planos Target Connecta (bloco 5 da copy). Entra no lugar do "Cliente em
-     destaque" do mockup, no mesmo fundo escuro, com cards no estilo dos de serviço e
-     o botão de assinar em dourado. Sem nome nem logo da Fleetnet nesta seção.
+<!-- 05 · Planos de internet (bloco 5 da copy). Entra no lugar do "Cliente em
+     destaque" do mockup, no mesmo fundo escuro, com cards no estilo dos de serviço.
+     A seção inteira usa o AZUL da Fleetnet, não o dourado da Target: aqui quem
+     entrega a internet é a provedora, e a Target é a agente autorizada que vende
+     (pedido do Rafael em 23/09, exigência do Google pro impulsionamento).
      Abas, cards e catálogo saem de src/dados/planos.json no build (marcadores
      @planos e @catalogo abaixo). -->
 <section class="secao secao--escura planos" id="planos" aria-labelledby="planos-titulo">
   <div class="container">
     <header class="secao-cab">
       <div data-revela>
-        <span class="rotulo">Planos Target Connecta</span>
+        <span class="rotulo">Planos de internet Fleetnet</span>
         <h2 class="titulo" id="planos-titulo">Internet com <span class="destaque">aplicativos inclusos.</span></h2>
       </div>
-      <p class="secao-cab__apoio texto-apoio" data-revela style="--i:1">Escolha a velocidade e os aplicativos. Pra assinar, é só chamar a Target no WhatsApp.</p>
+      <p class="secao-cab__apoio texto-apoio" data-revela style="--i:1">Escolha a velocidade e os aplicativos. Pra assinar, é só chamar a Target no WhatsApp: a Target Connecta é a agente autorizada que comercializa, e a Fleetnet é quem fornece a internet.</p>
     </header>
 
-    <div class="planos__corpo" data-revela style="--i:2">
+    <!-- Quem é quem, em cima dos preços: a Fleetnet é a provedora, a Target é a
+         agente autorizada. Precisa aparecer antes de qualquer botão de assinar. -->
+    <div class="provedor" data-revela style="--i:2">
+      <div class="provedor__marca">
+        <span class="provedor__rotulo">Provedor</span>
+        <img class="provedor__logo" src="/assets/img/fleetnet.svg" width="161" height="81" alt="Fleetnet Telecom" loading="lazy" decoding="async">
+      </div>
+      <div class="provedor__texto">
+        <p><strong>A internet é da Fleetnet</strong>, o melhor provedor do oeste paulista, e é ela quem fornece o serviço.</p>
+        <p><strong>A Target Connecta é agente autorizada</strong>, com exclusividade na comercialização: vende o plano, faz o cadastro e acompanha a assinatura.</p>
+      </div>
+    </div>
+
+    <div class="planos__corpo" data-revela style="--i:3">
       <!-- @planos -->
     </div>
 
     <div class="planos__pe">
       <button class="btn btn--contorno-ouro planos__todos" type="button" data-catalogo aria-haspopup="dialog"><i data-i="squares-four" data-w="regular"></i>Ver todos os aplicativos</button>
-      <p class="planos__aviso">Disponível nas cidades atendidas pela Target. Instalação sujeita à viabilidade técnica no endereço.</p>
+      <p class="planos__aviso">Serviço de internet fornecido pela Fleetnet. A Target Connecta comercializa como agente autorizada, nas cidades que atende. Instalação sujeita à viabilidade técnica no endereço.</p>
     </div>
   </div>
 
@@ -27,7 +42,7 @@
     <div class="janela__caixa">
       <header class="janela__cab">
         <div>
-          <span class="rotulo">Planos Target Connecta</span>
+          <span class="rotulo">Planos de internet Fleetnet</span>
           <h3 class="janela__titulo" id="catalogo-titulo">Catálogo de aplicativos</h3>
         </div>
         <button class="janela__fechar" type="button" data-fechar aria-label="Fechar o catálogo"><i data-i="x" data-w="regular"></i></button>
@@ -53,7 +68,7 @@
         <button class="janela__fechar" type="button" data-fechar aria-label="Fechar o formulário"><i data-i="x" data-w="regular"></i></button>
       </header>
       <form class="assinar__form" novalidate data-numero="{{cfg.whatsapp}}" data-modelo="{{attr:cfg.mensagens.cadastroPlano}}">
-        <p class="assinar__nota">Preencha seus dados e a conversa abre no WhatsApp da Target, já com o plano escolhido.</p>
+        <p class="assinar__nota">Preencha seus dados e a conversa abre no WhatsApp da Target, já com o plano escolhido. A Target Connecta é agente autorizada: o serviço de internet é fornecido pela Fleetnet.</p>
         <div class="campo">
           <label class="campo__rotulo" for="assinar-nome">Nome</label>
           <input class="campo__entrada" id="assinar-nome" name="nome" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" maxlength="80" placeholder="Nome e sobrenome" required>

@@ -1,9 +1,75 @@
 /* ================================================================ 05 · Planos
    Escuro, no lugar do "Cliente em destaque" do mockup. Abas em pílula (a ativa
-   dourada), cards no estilo dos de serviço: velocidade grande, preço em dourado,
-   selos dos apps e o botão de assinar em dourado na largura toda. Cada tipo de app
-   tem um selo próprio, o mesmo no card e no catálogo, dentro da paleta.
-   Celular: abas rolam de lado e os cards viram carrossel com o próximo na borda.   */
+   cheia), cards no estilo dos de serviço: velocidade grande, preço em destaque,
+   selos dos apps e o botão de assinar na largura toda. Cada tipo de app tem um
+   selo próprio, o mesmo no card e no catálogo, dentro da paleta.
+   Celular: abas rolam de lado e os cards viram carrossel com o próximo na borda.
+
+   O ACENTO AQUI É AZUL, não o dourado do resto do site: a internet é da Fleetnet,
+   a provedora, e a Target é a agente autorizada que vende (Rafael, 23/09). Em vez
+   de reescrever cada regra, o azul entra remapeando os tokens de acento dentro do
+   escopo da seção: tudo que usava --ouro passa a ler o azul. As janelas (catálogo
+   e assinatura) ficam dentro da seção, então herdam o mesmo acento.               */
+.planos {
+  --ouro: var(--azul-fleet);
+  --ouro-claro: var(--azul-claro);
+  --ouro-escuro: var(--azul-fleet-escuro);
+  --ouro-gradiente: var(--azul-gradiente);
+}
+/* o azul do botão é escuro: o texto vira branco, e não o quase preto do dourado */
+.planos .btn--ouro,
+.planos .planos__aba[aria-selected="true"] {
+  color: var(--branco);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .28), 0 10px 26px -14px rgb(0 112 179 / .85);
+}
+.planos .btn--ouro:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .34), 0 14px 32px -14px rgb(0 112 179 / .95); }
+/* o véu de hover do contornado está em rgb() fixo no _base: aqui vira azul */
+.planos .btn--contorno-ouro:hover { background: rgb(0 112 179 / .16); }
+/* selo claro com texto escuro: no azul claro o quase preto continua legível */
+.planos .selo--advanced { color: #04203A; }
+
+/* ---------------------------------------------------------------- quem é quem
+   Faixa acima dos preços: logo da Fleetnet de um lado, a divisão de papéis do
+   outro. É a exigência do Google pro impulsionamento, então vem antes de
+   qualquer botão de assinar, não no rodapé da seção.                            */
+.provedor {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 36px);
+  margin-bottom: clamp(26px, 3vw, 38px);
+  padding: clamp(18px, 2vw, 24px) clamp(20px, 2.2vw, 28px);
+  border: 1px solid rgb(0 112 179 / .45);
+  border-radius: var(--raio);
+  background:
+    radial-gradient(70% 120% at 0% 50%, rgb(0 112 179 / .22), transparent 70%),
+    linear-gradient(180deg, rgb(13 26 51 / .8), rgb(6 14 30 / .85));
+}
+.provedor__marca {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding-right: clamp(20px, 2.4vw, 36px);
+  border-right: 1px solid rgb(0 112 179 / .38);
+}
+.provedor__rotulo {
+  color: var(--azul-claro);
+  font: 600 11.5px/1 var(--fonte-rotulo);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.provedor__logo { width: clamp(124px, 12vw, 158px); height: auto; }
+.provedor__texto { display: grid; gap: 8px; max-width: 74ch; }
+.provedor__texto p { color: var(--prata); font-size: 15px; line-height: 1.55; }
+.provedor__texto strong { color: var(--gelo); font-weight: 700; }
+
+@media (max-width: 767.98px) {
+  /* empilha com o logo centrado, mas o texto fica alinhado à esquerda: parágrafo
+     de 4 linhas centralizado fica difícil de ler */
+  .provedor { grid-template-columns: 1fr; gap: 16px; }
+  .provedor__marca { width: 100%; padding-right: 0; padding-bottom: 16px; border-right: 0; border-bottom: 1px solid rgb(0 112 179 / .38); }
+  .provedor__texto p { font-size: 14.5px; }
+}
 
 /* ---------------------------------------------------------------- selos por tipo de app */
 .selo {
@@ -83,7 +149,7 @@
   transition: transform .3s var(--ease-out), border-color .25s ease, box-shadow .35s var(--ease-out);
 }
 @media (hover: hover) {
-  .plano:hover { transform: translateY(-3px); border-color: rgb(201 162 74 / .5); box-shadow: 0 22px 44px -28px rgb(0 0 0 / .9); }
+  .plano:hover { transform: translateY(-3px); border-color: rgb(0 112 179 / .6); box-shadow: 0 22px 44px -28px rgb(0 0 0 / .9); }
 }
 .plano__vel {
   display: flex;
@@ -129,7 +195,7 @@
   font-weight: 600;
   line-height: 1.2;
 }
-.plano__escolha .plano__mais { border-color: rgb(201 162 74 / .5); color: var(--ouro-claro); }
+.plano__escolha .plano__mais { border-color: rgb(0 112 179 / .6); color: var(--ouro-claro); }
 .plano__catalogo {
   display: inline-flex;
   align-items: center;
@@ -140,7 +206,7 @@
   font: 700 14px/1 var(--fonte-forte);
   letter-spacing: .01em;
   text-decoration: underline;
-  text-decoration-color: rgb(234 203 124 / .35);
+  text-decoration-color: rgb(87 182 234 / .38);
   text-underline-offset: 4px;
   transition: color .25s ease, text-decoration-color .25s ease;
 }
@@ -222,7 +288,7 @@
   transition: border-color .25s ease, background-color .25s ease;
 }
 .janela__fechar .i { width: 20px; height: 20px; }
-.janela__fechar:hover { border-color: var(--ouro); background: rgb(201 162 74 / .1); }
+.janela__fechar:hover { border-color: var(--ouro); background: rgb(0 112 179 / .16); }
 
 /* ---------------------------------------------------------------- catálogo de aplicativos */
 .catalogo { width: min(880px, 100% - 32px); }
@@ -279,7 +345,7 @@
   outline: none;
   border-color: var(--ouro);
   background: rgb(255 255 255 / .06);
-  box-shadow: 0 0 0 3px rgb(201 162 74 / .25);
+  box-shadow: 0 0 0 3px rgb(0 112 179 / .45);
 }
 .campo__entrada[aria-invalid="true"] { border-color: var(--erro); }
 .campo__entrada[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(244 165 147 / .22); }
@@ -289,7 +355,7 @@
   caret-color: var(--branco);
   box-shadow: 0 0 0 40px #0B1629 inset;
 }
-.campo__entrada:-webkit-autofill:focus { box-shadow: 0 0 0 40px #0B1629 inset, 0 0 0 3px rgb(201 162 74 / .25); }
+.campo__entrada:-webkit-autofill:focus { box-shadow: 0 0 0 40px #0B1629 inset, 0 0 0 3px rgb(0 112 179 / .45); }
 .campo__erro {
   display: flex;
   align-items: center;

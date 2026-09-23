@@ -44,6 +44,8 @@
 }
 .rodape__selo { display: inline-flex; align-items: center; gap: 9px; color: var(--gelo); font: 700 16px/1.25 var(--fonte-forte); }
 .rodape__selo .i { width: 22px; height: 22px; color: var(--ouro); }
+/* logo da provedora logo abaixo do selo: o arquivo é branco, serve no fundo noite */
+.rodape__fleet { width: 138px; height: auto; margin: 2px 0 4px; }
 .rodape__frase { line-height: 1.5; }
 .rodape__vendedor {
   display: inline-flex;
@@ -60,6 +62,21 @@
 }
 .rodape__vendedor .i { width: 16px; height: 16px; color: var(--ouro); }
 .rodape__vendedor:hover { border-color: var(--ouro); color: var(--ouro-claro); }
+
+/* quem é quem, por extenso, no fim da página: fica acima da linha do copyright,
+   separado por um fio azul da Fleetnet pra ler como aviso e não como rodapé solto */
+.rodape__oficial {
+  margin-top: clamp(30px, 3.4vw, 44px);
+  padding: 16px 18px;
+  border: 1px solid rgb(0 112 179 / .35);
+  border-left: 3px solid var(--azul-fleet);
+  border-radius: var(--raio-p);
+  background: rgb(0 112 179 / .08);
+}
+.rodape__oficial p { max-width: 96ch; color: var(--prata); font-size: 13.5px; line-height: 1.6; }
+.rodape__oficial strong { color: var(--gelo); font-weight: 700; }
+/* o aviso já abriu o espaço: a linha do copyright encosta nele */
+.rodape__oficial + .rodape__base { margin-top: 20px; }
 
 .rodape__base {
   display: flex;
