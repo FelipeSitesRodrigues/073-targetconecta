@@ -22,8 +22,9 @@ import path from 'node:path'
 const R = '../073 - TARGET CONECTA/Recursos Site'
 const APRESENTACAO = `${R}/DOCUMENTO APRESENTAÇÃO TARGET CONECTA/Apresentacao Target  pp-`
 const OUT = 'src/assets/img'
-rmSync(OUT, { recursive: true, force: true })
 mkdirSync(OUT, { recursive: true })
+// limpa só o que este script gera: o fleetnet.svg veio do site da Fleetnet, não sai daqui
+for (const f of readdirSync(OUT)) if (!f.endsWith('.svg')) rmSync(path.join(OUT, f), { recursive: true, force: true })
 const manifesto = {}
 
 async function gravar(pipeline, nome) {
@@ -270,6 +271,12 @@ for (let y = 0; y < COSTURA; y++) {
 }
 const equipe = await sharp(ext, { raw: { width: TW, height: EH, channels: 3 } }).png().toBuffer()
 await variantes(equipe, 'equipe', [480, 720, 960, 1320], { q: 76 })
+
+// ---------------------------------------------------------------- artes do Rafael (25/09), inteiras
+// "O que é a Target" (analogia Coca-Cola e FEMSA) é quase só texto: qualidade mais
+// alta, senão as letras pequenas borram. O time comercial traz os nomes na arte.
+await variantes(`${R}/COCA COLA-TARGET.jpg`, 'o-que-e-a-target', [480, 720, 960, 1280, 1600], { q: 82 })
+await variantes(`${R}/TIME COMERCIAL.jpeg`, 'time-comercial', [480, 720, 960, 1280, 1600], { q: 78 })
 
 // ---------------------------------------------------------------- compartilhamento (1200x630): hero com o logo à esquerda
 const logoOg = await sharp(empilhado).resize({ width: 360 }).png().toBuffer()

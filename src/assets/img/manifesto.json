@@ -134,6 +134,56 @@
   "h": 830,
   "kb": 36
  },
+ "o-que-e-a-target-480.webp": {
+  "w": 480,
+  "h": 270,
+  "kb": 37
+ },
+ "o-que-e-a-target-720.webp": {
+  "w": 720,
+  "h": 405,
+  "kb": 67
+ },
+ "o-que-e-a-target-960.webp": {
+  "w": 960,
+  "h": 540,
+  "kb": 100
+ },
+ "o-que-e-a-target-1280.webp": {
+  "w": 1280,
+  "h": 720,
+  "kb": 143
+ },
+ "o-que-e-a-target-1600.webp": {
+  "w": 1600,
+  "h": 900,
+  "kb": 186
+ },
+ "time-comercial-480.webp": {
+  "w": 480,
+  "h": 240,
+  "kb": 23
+ },
+ "time-comercial-720.webp": {
+  "w": 720,
+  "h": 360,
+  "kb": 40
+ },
+ "time-comercial-960.webp": {
+  "w": 960,
+  "h": 480,
+  "kb": 58
+ },
+ "time-comercial-1280.webp": {
+  "w": 1280,
+  "h": 640,
+  "kb": 82
+ },
+ "time-comercial-1600.webp": {
+  "w": 1600,
+  "h": 800,
+  "kb": 104
+ },
  "og-target-connecta.jpg": {
   "w": 1200,
   "h": 630,

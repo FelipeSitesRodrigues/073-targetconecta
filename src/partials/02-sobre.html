@@ -1,16 +1,17 @@
 <!-- 02 · Sobre (bloco 3 da copy). Fica no lugar do "Por que terceirizar" do mockup,
      no mesmo fundo claro e com o mesmo cabeçalho de duas colunas e a fileira de 4 cards.
-     Foto real dos fundadores na Band Paulista, sem a arte da apresentação por cima. -->
+     Foto real dos fundadores na Band Paulista, sem a arte da apresentação por cima.
+     Texto do "Onde nascemos" escrito pelo Rafael em 25/09, junto com as duas artes dele:
+     a analogia da Coca-Cola (o que é a Target) e o time comercial. -->
 <section class="secao secao--clara sobre" id="sobre" aria-labelledby="sobre-titulo">
   <div class="container">
     <header class="secao-cab">
       <div data-revela>
         <span class="rotulo">Onde nascemos</span>
-        <h2 class="titulo" id="sobre-titulo">Nascemos dentro de uma operadora.</h2>
+        <h2 class="titulo" id="sobre-titulo">Duas experiências. Uma visão em comum.</h2>
       </div>
       <div class="secao-cab__apoio texto-apoio sobre__intro" data-revela style="--i:1">
-        <p>A Target Connecta nasceu depois de <strong>12 meses de meta batida</strong> na venda da Fleetnet.</p>
-        <p>Dali saiu a decisão de criar uma empresa só pra encontrar bons vendedores, preparar cada um e acompanhar de perto.</p>
+        <p>A Target Connecta nasceu da visão de <strong>Rafael Borges</strong>, líder comercial e vendedor com mais de 15 anos de experiência em vendas, somada à experiência empresarial de <strong>Cássio Esteves</strong>, CEO da Fleetnet.</p>
       </div>
     </header>
 
@@ -21,19 +22,22 @@
       </figure>
 
       <div class="sobre__texto">
-        <p class="sobre__lead" data-revela>Hoje a Target é agente autorizada da Fleetnet, com exclusividade na comercialização: a Fleetnet é a provedora, e a Target é quem leva a internet dela até o cliente.</p>
-        <p class="texto-apoio" data-revela style="--i:1">Pra sua empresa, isso quer dizer um time que aprendeu a vender no telefone e na rua, com meta, supervisão e cliente de verdade.</p>
+        <p class="sobre__lead" data-revela>De um lado, a vivência de quem conhece o mercado, as equipes e a venda na prática. Do outro, a experiência e a estrutura da Fleetnet, empresa com mais de 14 anos de atuação, construída com foco em tecnologia, qualidade e conexão.</p>
+        <div class="texto-apoio sobre__corpo" data-revela style="--i:1">
+          <p>Dessa parceria nasceu um novo projeto: uma empresa especializada em desenvolver equipes comerciais, conquistar clientes e expandir mercados.</p>
+          <p>Hoje, a Target Connecta atua como comercializadora oficial e parceira da Fleetnet, transformando experiência, estratégia e relacionamento em novas oportunidades de crescimento.</p>
+        </div>
 
         <div class="sobre__pessoas" data-revela style="--i:2">
           <span class="rotulo">Quem está à frente</span>
           <ul class="sobre__nomes" role="list">
             <li>
               <strong class="sobre__nome">Cássio Esteves</strong>
-              <span class="sobre__cargo">Fundador da Target Connecta e CEO da Fleetnet</span>
+              <span class="sobre__cargo">CEO</span>
             </li>
             <li>
               <strong class="sobre__nome">Rafael Borges</strong>
-              <span class="sobre__cargo">Cofundador e supervisor de vendas</span>
+              <span class="sobre__cargo">Diretor comercial</span>
             </li>
           </ul>
           <!-- @se cfg.entrevistaBand -->
@@ -42,6 +46,26 @@
         </div>
       </div>
     </div>
+
+    <!-- A arte é quase só texto: no celular as letras ficam pequenas, então a legenda
+         conta a analogia por extenso e o link abre a arte inteira pra dar zoom -->
+    <figure class="sobre__arte sobre__analogia">
+      <div class="sobre__arte-foto" data-revela="foto">
+        <img data-img="o-que-e-a-target" data-img-max="1280" sizes="(min-width: 1368px) 1240px, calc(100vw - 40px)" alt="O que é a Target Connecta: a Coca-Cola está para a FEMSA assim como a Fleetnet está para a Target Connecta" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="sobre__arte-legenda" data-revela>
+        <p><strong>A Coca-Cola está para a FEMSA assim como a Fleetnet está para a Target Connecta.</strong> A Coca-Cola produz a bebida e a FEMSA engarrafa, distribui e leva até os pontos de venda. A Fleetnet cuida da produção, da instalação e da qualidade da internet, e a Target Connecta é a comercializadora oficial, com contrato: desenvolve o mercado, ativa clientes e expande as vendas.</p>
+        <a class="pilula sobre__ampliar" href="/assets/img/o-que-e-a-target-1600.webp" target="_blank" rel="noopener"><i data-i="magnifying-glass-plus" data-w="regular"></i>Ver a imagem ampliada</a>
+      </figcaption>
+    </figure>
+
+    <figure class="sobre__arte sobre__time">
+      <span class="rotulo sobre__arte-rotulo" data-revela>Time comercial</span>
+      <div class="sobre__arte-foto" data-revela="foto">
+        <img data-img="time-comercial" data-img-max="1280" sizes="(min-width: 1368px) 1240px, calc(100vw - 40px)" alt="Time comercial da Target Connecta: Rafael Borges, Roger Fernandes, Felipe Estevão e Carlos César, de terno, numa mesa com os logos da Fleetnet e da Target ao fundo" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="sobre__arte-legenda sobre__time-nomes" data-revela>Rafael Borges, Roger Fernandes, Felipe Estevão e Carlos César</figcaption>
+    </figure>
 
     <div class="sobre__valores">
       <span class="rotulo sobre__valores-rotulo" data-revela>Nossos valores</span>
@@ -80,6 +104,6 @@
       </div>
     </div>
 
-    <p class="sobre__fecho" data-revela>Juntos hoje. <span>Mais longe amanhã.</span></p>
+    <p class="sobre__fecho" data-revela>Target Connecta. <span>Pessoas, experiência e resultados conectados.</span></p>
   </div>
 </section>

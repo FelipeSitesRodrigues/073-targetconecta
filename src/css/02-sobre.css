@@ -1,7 +1,8 @@
 /* ================================================================ 02 · Sobre
    Fundo claro do mockup. Cabeçalho de duas colunas, a foto dos fundadores com o
-   texto da parceria ao lado, a fileira de 4 cards (os valores do documento B2B)
-   e missão e visão no pé, com o texto oficial sem mudança.                       */
+   texto da parceria ao lado, as duas artes do Rafael (analogia e time comercial),
+   a fileira de 4 cards (os valores do documento B2B) e missão e visão no pé, com o
+   texto oficial sem mudança.                                                      */
 
 .sobre__intro p + p { margin-top: 12px; }
 .sobre__intro strong { color: var(--tinta); font-weight: 700; }
@@ -48,6 +49,7 @@
   letter-spacing: -.005em;
 }
 .sobre__lead + .texto-apoio { margin-top: 16px; }
+.sobre__corpo p + p { margin-top: 12px; }
 
 .sobre__pessoas {
   margin-top: clamp(24px, 2.6vw, 34px);
@@ -68,6 +70,35 @@
 }
 .sobre__cargo { display: block; margin-top: 6px; color: var(--texto-claro); font-size: 14.5px; line-height: 1.45; }
 .sobre__video { margin-top: 20px; }
+
+/* ---------------------------------------------------------------- artes do Rafael: analogia e time comercial
+   As duas vêm inteiras, na largura do container, porque têm texto e nome escritos na
+   própria imagem: cortar tira informação. A moldura segue a da foto da Band.      */
+.sobre__arte { margin-top: clamp(48px, 6vw, 80px); }
+.sobre__time { margin-top: clamp(40px, 5vw, 64px); }
+.sobre__arte-rotulo { margin-bottom: 18px; }
+.sobre__arte-foto {
+  overflow: hidden;
+  border: 1px solid var(--linha-clara);
+  border-radius: var(--raio);
+  background: var(--marinho);
+  box-shadow: 0 30px 60px -36px rgb(10 20 40 / .55);
+}
+.sobre__arte-foto img { width: 100%; }
+.sobre__arte-legenda {
+  margin-top: 16px;
+  color: var(--texto-claro);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.sobre__arte-legenda p { max-width: 82ch; }
+.sobre__arte-legenda strong { color: var(--tinta); font-weight: 700; }
+.sobre__ampliar { margin-top: 16px; }
+.sobre__time-nomes { font-size: 14.5px; }
+/* no computador a arte já se lê inteira, o link de ampliar só serve até o tablet */
+@media (min-width: 1100px) {
+  .sobre__ampliar { display: none; }
+}
 
 /* ---------------------------------------------------------------- valores (os 4 cards do mockup) */
 .sobre__valores { margin-top: clamp(48px, 6vw, 80px); }
@@ -134,4 +165,6 @@
   .valor__titulo { margin-top: 14px; font-size: 18px; }
   .valor__texto { font-size: 14.5px; }
   .sobre__legenda { left: 12px; bottom: 12px; font-size: 12.5px; }
+  .sobre__arte-foto { border-radius: var(--raio-p); }
+  .sobre__arte-legenda { font-size: 15px; }
 }
