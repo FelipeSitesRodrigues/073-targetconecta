@@ -1,0 +1,26 @@
+/* 08 · Planejamento */
+.plano__fases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.plano__fase { padding: 24px 26px 28px; }
+/* linha do tempo de 12 meses com o trecho da fase aceso */
+.plano__barra { position: relative; height: 6px; border-radius: 6px; background: rgb(120 140 180 / .22); overflow: hidden; }
+.plano__barra span { position: absolute; top: 0; bottom: 0; left: var(--ini, 0%); right: calc(100% - var(--fim)); border-radius: 6px; background: var(--laranja-gradiente); }
+.plano__prazo { margin-top: 18px; color: var(--laranja-claro); font: 600 12.5px/1.3 var(--fonte-rotulo); letter-spacing: .12em; text-transform: uppercase; }
+.plano__prazo strong { color: var(--gelo); font-weight: 600; }
+.plano__fase h3 { margin-top: 8px; color: var(--gelo); font: 800 23px/1.1 var(--fonte-titulo); }
+.plano__itens { display: grid; gap: 9px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--linha-escura); }
+.plano__itens li { position: relative; padding-left: 20px; font-size: 14.5px; line-height: 1.45; }
+.plano__itens li::before { content: ''; position: absolute; left: 0; top: .5em; width: 8px; height: 8px; border-radius: 2px; background: var(--laranja); transform: rotate(45deg); }
+
+.plano__pe { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 18px 48px; align-items: center; margin-top: clamp(32px, 3.6vw, 44px); }
+.plano__exemplo { display: flex; gap: 12px; font-size: 15px; line-height: 1.55; }
+.plano__exemplo .i { width: 24px; height: 24px; flex: none; color: var(--laranja); }
+
+@media (max-width: 999.98px) {
+  .plano__fases { grid-template-columns: 1fr; }
+  .plano__itens { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 20px; }
+  .plano__pe { grid-template-columns: 1fr; }
+}
+@media (max-width: 559.98px) {
+  .plano__fase { padding: 20px; }
+  .plano__itens { grid-template-columns: 1fr; }
+}

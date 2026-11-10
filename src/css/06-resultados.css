@@ -1,0 +1,49 @@
+/* 06 · Case Fleetnet */
+.res__grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 64px; align-items: center; }
+.res__texto .titulo { margin-bottom: 22px; }
+.res__parceiro { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--linha-escura); }
+.res__parceiro img { width: 110px; height: auto; }
+.res__parceiro span { color: var(--gelo); font: 600 12.5px/1.35 var(--fonte-rotulo); letter-spacing: .14em; text-transform: uppercase; }
+.res__foto img { width: 100%; aspect-ratio: 16 / 10.5; object-fit: cover; object-position: 50% 40%; border-radius: var(--raio); }
+
+.res__numeros {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(36px, 4vw, 52px);
+  border-block: 1px solid var(--linha-escura);
+}
+.res__numeros li { display: flex; flex-direction: column; padding: 26px 28px; }
+.res__numeros li + li { border-left: 1px solid var(--linha-escura); }
+.res__num { color: var(--laranja); font: 800 clamp(3rem, 2.2rem + 3vw, 4.6rem)/.9 var(--fonte-titulo); letter-spacing: -.01em; }
+.res__rotulo { margin-top: 10px; color: var(--gelo); font: 700 18px/1.2 var(--fonte-forte); text-transform: uppercase; letter-spacing: .02em; }
+.res__detalhe { margin-top: 6px; font-size: 14.5px; }
+
+.res__meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px 44px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 28px 32px;
+  border: 1px solid rgb(240 122 26 / .5);
+  border-radius: var(--raio);
+  background: linear-gradient(110deg, rgb(240 122 26 / .14), rgb(240 122 26 / .03) 60%);
+}
+.res__meta-rotulo { color: var(--laranja-claro); font: 600 12px/1.3 var(--fonte-rotulo); letter-spacing: .14em; text-transform: uppercase; }
+.res__meta-num p { margin-top: 6px; color: var(--gelo); font: 800 22px/1.05 var(--fonte-titulo); text-transform: uppercase; max-width: 16ch; }
+.res__meta-num strong { display: block; color: var(--branco); font-size: clamp(3.4rem, 2.6rem + 3vw, 5rem); line-height: .9; }
+.res__meta-texto p { font-size: 15px; line-height: 1.6; }
+.res__aviso { display: flex; gap: 10px; margin-top: 12px; color: var(--gelo); font-size: 13.5px !important; }
+.res__aviso .i { width: 20px; height: 20px; flex: none; color: var(--laranja-claro); }
+.res__frase { margin-top: clamp(30px, 3.4vw, 44px); }
+
+@media (max-width: 999.98px) {
+  .res__grade { grid-template-columns: 1fr; }
+  .res__meta { grid-template-columns: 1fr; }
+}
+@media (max-width: 699.98px) {
+  .res__numeros { grid-template-columns: 1fr; }
+  .res__numeros li { padding: 20px 0; }
+  .res__numeros li + li { border-left: 0; border-top: 1px solid var(--linha-escura); }
+  .res__meta { padding: 22px 20px; }
+}

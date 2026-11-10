@@ -1,8 +1,8 @@
 /**
- * Build do site da Target Connecta. HTML, CSS e JS estático em dist/ (base do 069).
+ * Build do site da Target Connect (reformulação de 11/2026). HTML, CSS e JS estático em dist/ (base do 069).
  *
  *   node build.mjs                            página inteira em dist/index.html
- *   node build.mjs --preview 05-planos        só aquela seção, em dist/preview/05-planos.html
+ *   node build.mjs --preview 07-presenca      só aquela seção, em dist/preview/07-presenca.html
  *   node build.mjs --preview 00-header,01-hero
  *   node build.mjs --publicar                 página inteira e apaga dist/preview (antes do commit)
  *
@@ -13,16 +13,13 @@
  * - CSS: src/css/_*.css primeiro (fontes e base), depois o arquivo de cada seção,
  *   com o mesmo nome do parcial, em ordem de nome. Entra minificado num <style>.
  * - JS: mesma regra, em src/js, num <script> no fim do <body>. Cada arquivo é um IIFE.
- * - <!-- @planos --> e <!-- @catalogo --> viram as abas, os cards e o catálogo de
- *   apps a partir de src/dados/planos.json. Sai tudo no HTML, pro Google ler preço.
+ * - <!-- @cidades --> vira a lista de cidades (src/dados/cidades.json) e <!-- @duvidas -->
+ *   o acordeão de dúvidas (src/dados/duvidas.json), que também alimenta o FAQPage.
+ *   {{marca}} vira o SVG do símbolo (src/assets/img/marca.svg) embutido.
  * - {{wa:chave}} vira o link do WhatsApp com a mensagem mensagens.chave do config.
- *   {{vendedor}} é o painel do vendedor (painelVendedor) ou, enquanto o link não
- *   chega, o WhatsApp com a mensagem de vendedor. {{cfg.caminho}} puxa qualquer
+ *   {{cfg.caminho}} puxa qualquer
  *   valor do config; {{attr:cfg.caminho}} faz o mesmo dentro de atributo HTML (escapa
  *   aspas e guarda a quebra de linha). {{ano}} é o ano atual.
- * - O botão de assinar de cada plano leva mega, preço e linha em data-plano-*: o JS
- *   abre o formulário e monta a mensagem com mensagens.cadastroPlano. Sem JS, ele
- *   continua sendo o link do WhatsApp com a mensagem do plano.
  * - <!-- @se cfg.caminho --> ... <!-- /@se --> só fica se o valor do config existir.
  * - <i data-i="nome" data-w="light" class="..."></i> vira o SVG do Phosphor embutido.
  * - <img data-img="nome" sizes="..." alt="..."> ganha src, srcset, width e height a
@@ -30,7 +27,7 @@
  * - <!-- @schema --> recebe o JSON-LD da empresa, montado do config.
  * - Avisa: travessão no texto, img sem alt/width/height, id repetido, âncora sem
  *   destino, marcador {{...}} que sobrou, CSS com chave desbalanceada e o que ainda
- *   falta o cliente mandar (domínio, painel do vendedor).
+ *   falta o cliente mandar (domínio).
  */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, statSync, copyFileSync, renameSync, rmSync } from 'node:fs'
 import path from 'node:path'
@@ -41,7 +38,8 @@ const RAIZ = path.dirname(fileURLToPath(import.meta.url))
 const P = (...a) => path.join(RAIZ, ...a)
 const DIST = P('dist')
 const cfg = JSON.parse(readFileSync(P('site.config.json'), 'utf8'))
-const planos = JSON.parse(readFileSync(P('src/dados/planos.json'), 'utf8'))
+const cidades = JSON.parse(readFileSync(P('src/dados/cidades.json'), 'utf8'))
+const duvidas = JSON.parse(readFileSync(P('src/dados/duvidas.json'), 'utf8'))
 const manifesto = existsSync(P('src/assets/img/manifesto.json')) ? JSON.parse(readFileSync(P('src/assets/img/manifesto.json'), 'utf8')) : {}
 const avisos = []
 
@@ -149,7 +147,6 @@ function linkWa(chave) {
   if (!msg) avisos.push(`mensagem de WhatsApp sem chave no config: ${chave}`)
   return wa(msg || '')
 }
-const linkVendedor = () => cfg.painelVendedor || linkWa('vendedor')
 
 const cacheIcone = new Map()
 function icone(nome, peso = 'light', classe = '') {
@@ -187,102 +184,54 @@ function imagens(html) {
   })
 }
 
-// ---------------------------------------------------------------- planos (de src/dados/planos.json)
-const cats = planos.categorias
-const nomeCat = (c) => cats[c].nome
-function cardPlano(linha, p, j) {
-  const id = `plano-${linha.id}-${p.mega}`
-  const msg = `Olá! Vim pelo site da Target Connecta e quero assinar o *${p.mensagem}*. Minha cidade é: `
-  let miolo
-  if (p.itens) {
-    miolo = `<ul class="plano__itens" role="list">${p.itens.map((t) => `<li><i data-i="check" data-w="bold"></i>${esc(t)}</li>`).join('')}</ul>`
-  } else {
-    const selos = p.inclui
-      .map(([c, n]) => `<span class="selo selo--${c}">${c === 'extra' ? cats[c].apps[0] : `${n} ${nomeCat(c)}`}</span>`)
-      .join(`<span class="plano__juntar">${p.juntar === 'ou' ? 'ou' : '+'}</span>`)
-    // "Escolha entre": dois apps de vitrine de cada tipo que se escolhe (o Premiere do
-    // Combo Sport já vem incluso) e o "+N" com o resto do que dá pra escolher
-    const escolhiveis = p.inclui.map(([c]) => c).filter((c) => c !== 'extra')
-    const vitrine = escolhiveis.flatMap((c) => planos.vitrine[c] || []).slice(0, 4)
-    const todos = new Set(escolhiveis.flatMap((c) => cats[c].apps))
-    const resto = todos.size - vitrine.length
-    miolo = `<p class="plano__selos">${selos}</p>
-        <p class="plano__regra">${esc(p.texto)}</p>
-        <p class="plano__escolha-titulo">Escolha entre</p>
-        <ul class="plano__escolha" role="list">${vitrine.map((a) => `<li>${esc(a)}</li>`).join('')}${resto > 0 ? `<li class="plano__mais">+${resto}</li>` : ''}</ul>
-        <button class="plano__catalogo" type="button" data-catalogo aria-haspopup="dialog">Ver todos os aplicativos<i data-i="arrow-right" data-w="regular"></i></button>`
-  }
-  return `
-      <li class="plano" style="--i:${j}">
-        <p class="plano__vel"><span class="plano__num">${p.mega}</span><span class="plano__mega">Mega</span></p>
-        <p class="plano__preco"><span class="plano__rs">R$</span>${p.preco}<span class="plano__mes">/mês</span></p>
-        <div class="plano__miolo">
-        ${miolo}
-        </div>
-        <a class="btn btn--ouro plano__btn" href="${wa(msg)}" target="_blank" rel="noopener" data-zap="${id}" data-evento="plano" data-assinar data-plano-mega="${p.mega}" data-plano-preco="${p.preco}" data-plano-linha="${esc(linha.naMensagem || linha.nome)}" data-plano-texto="${esc(p.mensagem)}"><i data-i="whatsapp-logo" data-w="regular"></i>Assinar pelo WhatsApp</a>
-      </li>`
-}
+// ---------------------------------------------------------------- cidades e dúvidas (src/dados)
+const marcaSvg = readFileSync(P('src/assets/img/marca.svg'), 'utf8').trim().replace('<!--fundo-->', '').replace('<svg ', '<svg class="logo__marca" aria-hidden="true" focusable="false" ')
 
-function htmlPlanos() {
-  const abas = planos.linhas
-    .map((l, i) => `<button class="planos__aba" type="button" role="tab" id="aba-${l.id}" aria-controls="painel-${l.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${esc(l.nome)}</button>`)
-    .join('\n      ')
-  const paineis = planos.linhas
+function htmlCidades() {
+  return cidades.regioes
     .map(
-      (l, i) => `
-    <div class="planos__painel" role="tabpanel" id="painel-${l.id}" aria-labelledby="aba-${l.id}"${i === 0 ? '' : ' hidden'}>
-      ${l.nota ? `<p class="planos__nota-linha">${esc(l.nota)}</p>` : ''}
-      <ul class="planos__trilho${l.planos.length < 3 ? ' planos__trilho--poucos' : ''}" role="list" tabindex="-1">${l.planos.map((p, j) => cardPlano(l, p, j)).join('')}
-      </ul>
-      ${l.planos.length > 1 ? `<div class="planos__pontos" aria-hidden="true">${l.planos.map((_, j) => `<span${j === 0 ? ' class="ativo"' : ''}></span>`).join('')}</div>` : ''}
-    </div>`,
+      (r) => `
+          <div class="pres__grupo">
+            <h3>${esc(r.nome)} <span class="sr-only">(${r.cidades.length} cidades)</span></h3>
+            <ul class="pres__chips" role="list">${r.cidades
+              .map((c) => `<li><button class="pres__chip${c.base ? ' pres__chip--base' : ''}" type="button" data-cidade="${c.id}">${esc(c.nome)}${c.base ? ' (base)' : ''}</button></li>`)
+              .join('')}</ul>
+          </div>`,
     )
     .join('')
-  return `<div class="planos__abas" role="tablist" aria-label="Linhas de planos">
-      ${abas}
-    </div>${paineis}`
 }
 
-function htmlCatalogo() {
-  return Object.entries(cats)
-    .map(
-      ([c, cat]) => `
-      <section class="catalogo__grupo">
-        <h4 class="catalogo__tipo"><span class="selo selo--${c}">${esc(cat.nome)}</span><span class="catalogo__qtd">${cat.apps.length} ${cat.apps.length === 1 ? 'app' : 'apps'}${cat.nota ? ` · ${esc(cat.nota)}` : ''}</span></h4>
-        <ul class="catalogo__lista" role="list">${cat.apps.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
-      </section>`,
-    )
+function htmlDuvidas() {
+  return duvidas
+    .map((d) => `
+      <details class="duv__item">
+        <summary>${esc(d.p)}<i data-i="plus" data-w="bold"></i></summary>
+        <p>${esc(d.r)}</p>
+      </details>`)
     .join('')
 }
 
 function schema() {
   const e = cfg.endereco
   const base = (cfg.dominio || '').replace(/\/$/, '')
-  const dados = {
-    '@context': 'https://schema.org',
+  const empresa = {
     '@type': 'ProfessionalService',
     name: cfg.nome,
-    slogan: 'Do telefone à porta, até o cliente instalado.',
-    description: 'Terceirização comercial: telemarketing, televendas e venda porta a porta com time treinado e supervisionado, no oeste paulista e no Mato Grosso do Sul. Agente autorizado da Fleetnet, com exclusividade na comercialização: o serviço de internet é fornecido pela Fleetnet, a provedora.',
+    slogan: 'Nascemos para dar tração.',
+    description: 'Terceirização, estruturação e gestão de operações comerciais porta a porta (PAP) para provedores de internet e empresas de telecomunicações: liderança, executivos de vendas, frota própria, planejamento territorial, CRM e gestão de resultados.',
     telephone: `+${cfg.whatsapp}`,
     email: cfg.email || undefined,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: e.rua,
-      addressLocality: e.cidade,
-      addressRegion: e.uf,
-      postalCode: e.cep,
-      addressCountry: 'BR',
-    },
-    areaServed: [
-      { '@type': 'State', name: 'São Paulo' },
-      { '@type': 'State', name: 'Mato Grosso do Sul' },
-    ],
-    knowsAbout: ['Terceirização comercial', 'Telemarketing', 'Televendas', 'Venda porta a porta'],
+    address: { '@type': 'PostalAddress', streetAddress: e.rua, addressLocality: e.cidade, addressRegion: e.uf, postalCode: e.cep, addressCountry: 'BR' },
+    areaServed: [{ '@type': 'Country', name: 'Brasil' }, { '@type': 'State', name: 'São Paulo' }, { '@type': 'State', name: 'Mato Grosso do Sul' }],
+    knowsAbout: ['Terceirização de vendas', 'Venda porta a porta', 'Operação comercial PAP', 'Expansão comercial de provedores de internet', 'Telecomunicações'],
   }
-  if (cfg.instagram) dados.sameAs = [cfg.instagram]
-  if (base) Object.assign(dados, { '@id': `${base}/#empresa`, url: `${base}/`, image: `${base}/assets/img/og-target-connecta.jpg`, logo: `${base}/assets/img/logo-empilhado-600.png` })
-  return `<script type="application/ld+json">${JSON.stringify(dados)}</script>`
+  if (cfg.instagram) empresa.sameAs = [cfg.instagram]
+  if (base) Object.assign(empresa, { '@id': `${base}/#empresa`, url: `${base}/`, image: `${base}/assets/img/og-target-connect.jpg`, logo: `${base}/icon-512.png` })
+  const faq = {
+    '@type': 'FAQPage',
+    mainEntity: duvidas.map((d) => ({ '@type': 'Question', name: d.p, acceptedAnswer: { '@type': 'Answer', text: d.r } })),
+  }
+  return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [empresa, faq] })}</script>`
 }
 
 // ---------------------------------------------------------------- montagem
@@ -291,15 +240,15 @@ function montar(parciais) {
   if (parciais) {
     // preview: só o(s) parcial(is) pedido(s); header e rodapé ficam fora do <main>
     const header = parciais.includes('00-header') ? '<!-- @parcial 00-header -->' : ''
-    const rodape = parciais.includes('10-rodape') ? '<!-- @parcial 10-rodape -->' : ''
+    const rodape = parciais.includes('13-rodape') ? '<!-- @parcial 13-rodape -->' : ''
     const meio = parciais
-      .filter((n) => n !== '00-header' && n !== '10-rodape')
+      .filter((n) => n !== '00-header' && n !== '13-rodape')
       .map((n) => `<!-- @parcial ${n} -->`)
       .join('\n')
-    html = html.replace(/<!--\s*@parcial 00-header\s*-->[\s\S]*<!--\s*@parcial 10-rodape\s*-->/, `${header}\n  <main id="conteudo">\n${meio}\n  </main>\n${rodape}`)
+    html = html.replace(/<!--\s*@parcial 00-header\s*-->[\s\S]*<!--\s*@parcial 13-rodape\s*-->/, `${header}\n  <main id="conteudo">\n${meio}\n  </main>\n${rodape}`)
   }
   for (let n = 0; n < 4 && /<!--\s*@parcial\s/.test(html); n++) html = html.replace(/<!--\s*@parcial\s+([\w-]+)\s*-->/g, (_, nome) => lerParcial(nome))
-  html = html.replace('<!-- @planos -->', htmlPlanos).replace('<!-- @catalogo -->', htmlCatalogo)
+  html = html.replace('<!-- @cidades -->', htmlCidades).replace('<!-- @duvidas -->', htmlDuvidas).replace(/\{\{marca\}\}/g, () => marcaSvg)
   html = html.replace(/<!--\s*@se\s+cfg\.([\w.]+)\s*-->([\s\S]*?)<!--\s*\/@se\s*-->/g, (_, c, dentro) => (valor(c, false) ? dentro : ''))
   const cabeca = []
   html = html.replace(/<!--\s*@head\s*-->([\s\S]*?)<!--\s*\/@head\s*-->/g, (_, c) => {
@@ -312,7 +261,6 @@ function montar(parciais) {
   html = html.replace('<!-- @css -->', () => `<style>${minCss(juntar('src/css', '.css', parciais))}</style>`)
   html = html.replace(/<i data-i="([\w-]+)"(?: data-w="(\w+)")?(?: class="([^"]*)")?><\/i>/g, (_, nome, peso, classe) => icone(nome, peso || 'light', classe || ''))
   html = html.replace(/\{\{wa:([\w-]+)\}\}/g, (_, chave) => linkWa(chave))
-  html = html.replace(/\{\{vendedor\}\}/g, linkVendedor)
   html = html.replace(/\{\{attr:cfg\.([\w.]+)\}\}/g, (_, c) => esc(valor(c)).replace(/\n/g, '&#10;'))
   html = html.replace(/\{\{cfg\.([\w.]+)\}\}/g, (_, c) => valor(c))
   html = html.replace(/\{\{ano\}\}/g, String(new Date().getFullYear()))
@@ -321,7 +269,7 @@ function montar(parciais) {
   const base = (cfg.dominio || '').replace(/\/$/, '')
   html = html.replace(
     '<!-- @meta-dominio -->',
-    base ? `<link rel="canonical" href="${base}/">\n  <meta property="og:url" content="${base}/">\n  <meta property="og:image" content="${base}/assets/img/og-target-connecta.jpg">` : '<meta property="og:image" content="/assets/img/og-target-connecta.jpg">',
+    base ? `<link rel="canonical" href="${base}/">\n  <meta property="og:url" content="${base}/">\n  <meta property="og:image" content="${base}/assets/img/og-target-connect.jpg">` : '<meta property="og:image" content="/assets/img/og-target-connect.jpg">',
   )
   return html
 }
@@ -373,10 +321,9 @@ if (!argPreview) {
   if (base) gravar(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${base}/</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod></url>\n</urlset>\n`)
   gravar(
     path.join(DIST, 'site.webmanifest'),
-    JSON.stringify({ name: cfg.nome, short_name: 'Target', start_url: '/', display: 'standalone', background_color: '#050A14', theme_color: '#050A14', icons: [192, 512].map((s) => ({ src: `/icon-${s}.png`, sizes: `${s}x${s}`, type: 'image/png' })) }),
+    JSON.stringify({ name: cfg.nome, short_name: 'Target Connect', start_url: '/', display: 'standalone', background_color: '#0B1630', theme_color: '#0B1630', icons: [192, 512].map((s) => ({ src: `/icon-${s}.png`, sizes: `${s}x${s}`, type: 'image/png' })) }),
   )
   if (!base) avisos.push('dominio vazio no site.config.json: sem canonical, sem sitemap e og:image relativo')
-  if (!cfg.painelVendedor) avisos.push('painelVendedor vazio: "Área do vendedor" leva pro WhatsApp até o Rafael mandar o link do painel')
   if (process.argv.includes('--publicar')) rmSync(path.join(DIST, 'preview'), { recursive: true, force: true })
   console.log(`ok dist/index.html ${kb(html)}`)
 } else {

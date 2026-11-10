@@ -1,0 +1,43 @@
+/* 02 · Quem somos */
+.quem__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 32px 64px;
+  align-items: center;
+}
+.quem__texto .titulo { margin-bottom: 20px; }
+.quem__foto { position: relative; }
+.quem__foto img { width: 100%; aspect-ratio: 4 / 3.1; object-fit: cover; object-position: 50% 30%; border-radius: var(--raio); box-shadow: var(--sombra-card); }
+.quem__foto figcaption { margin-top: 12px; color: var(--texto-claro); font-size: 14px; }
+/* a flecha laranja encostada na foto */
+.quem__foto::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 64px;
+  height: 64px;
+  border-top: 3px solid var(--laranja);
+  border-left: 3px solid var(--laranja);
+  border-top-left-radius: 18px;
+  pointer-events: none;
+}
+
+.quem__pilares {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(36px, 4vw, 52px);
+}
+.quem__pilar { padding: 24px 24px 26px; }
+.quem__pilar h3 { margin-top: 14px; color: var(--tinta); font: 700 20px/1.2 var(--fonte-forte); }
+.quem__pilar p { margin-top: 8px; font-size: 15px; line-height: 1.55; }
+
+@media (max-width: 999.98px) {
+  .quem__grade { grid-template-columns: 1fr; }
+  .quem__foto { max-width: 620px; }
+}
+@media (max-width: 767.98px) {
+  .quem__pilares { grid-template-columns: 1fr; gap: 12px; }
+  .quem__pilar { padding: 20px; }
+}

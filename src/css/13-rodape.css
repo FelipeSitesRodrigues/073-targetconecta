@@ -1,0 +1,25 @@
+/* 13 · Rodapé */
+.rodape { background: var(--noite); padding-top: clamp(44px, 5vw, 64px); }
+.rodape__topo { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px 32px; padding-bottom: 36px; border-bottom: 1px solid var(--linha-escura); }
+.rodape__lema { color: var(--branco); font: 800 clamp(2rem, 1.4rem + 2.4vw, 3.4rem)/.95 var(--fonte-titulo); text-transform: uppercase; letter-spacing: -.005em; }
+.rodape__lema span { color: var(--laranja); }
+.rodape__grade { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .7fr) minmax(0, 1.1fr); gap: 32px 48px; padding-block: 40px; }
+.rodape__marca p { margin-top: 16px; font-size: 15px; max-width: 34ch; }
+.rodape__marca .rodape__assinatura { margin-top: 6px; color: var(--laranja-claro); font: 700 15px/1.4 var(--fonte-forte); }
+.rodape__titulo { color: var(--gelo); font: 600 12.5px/1.3 var(--fonte-rotulo); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px; }
+.rodape__links { display: grid; gap: 9px; }
+.rodape__links a, .rodape__contato a { transition: color .2s ease; }
+.rodape__links a:hover, .rodape__contato a:hover { color: var(--laranja-claro); }
+.rodape__contato { display: grid; gap: 12px; font-size: 15px; }
+.rodape__contato li { display: flex; gap: 12px; align-items: flex-start; }
+.rodape__contato .i { width: 20px; height: 20px; flex: none; margin-top: 2px; color: var(--laranja); }
+.rodape__base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; padding-block: 20px 28px; border-top: 1px solid var(--linha-escura); font-size: 13.5px; }
+.rodape__base a { color: var(--gelo); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 899.98px) {
+  .rodape__grade { grid-template-columns: 1fr 1fr; }
+  .rodape__marca { grid-column: 1 / -1; }
+}
+@media (max-width: 559.98px) {
+  .rodape__grade { grid-template-columns: 1fr; }
+  .rodape__topo .btn { width: 100%; }
+}

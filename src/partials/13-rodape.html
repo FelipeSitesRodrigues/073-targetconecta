@@ -1,0 +1,52 @@
+  <!-- 13 · Rodapé. Marca com o slogan e a assinatura do briefing, navegação e contato. -->
+  <footer class="rodape escuro" aria-labelledby="rodape-titulo">
+    <h2 class="sr-only" id="rodape-titulo">Rodapé</h2>
+    <div class="container rodape__topo">
+      <p class="rodape__lema">Nascemos para <span>dar tração.</span></p>
+      <a class="btn btn--laranja" href="#contato">Solicitar proposta comercial<i data-i="arrow-right" data-w="bold" class="seta"></i></a>
+    </div>
+
+    <div class="container rodape__grade">
+      <div class="rodape__marca">
+        <span class="logo">
+          {{marca}}
+          <span class="logo__nome"><span class="logo__target">Target</span> <span class="logo__connect">Connect</span></span>
+        </span>
+        <p>Sua operação porta a porta, do zero ao resultado.</p>
+        <p class="rodape__assinatura">Sua rede conecta. Nossa equipe conquista.</p>
+      </div>
+
+      <nav class="rodape__col" aria-labelledby="rodape-nav">
+        <h3 class="rodape__titulo" id="rodape-nav">Navegação</h3>
+        <ul class="rodape__links" role="list">
+          <li><a href="#quem-somos">Quem somos</a></li>
+          <li><a href="#operacao">Nossa estrutura</a></li>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#resultados">Resultados</a></li>
+          <li><a href="#presenca">Presença</a></li>
+          <li><a href="#planejamento">Planejamento</a></li>
+          <li><a href="#exclusividade">Exclusividade</a></li>
+          <li><a href="#duvidas">Dúvidas</a></li>
+        </ul>
+      </nav>
+
+      <div class="rodape__col">
+        <h3 class="rodape__titulo">Contato comercial</h3>
+        <address>
+          <ul class="rodape__contato" role="list">
+            <li><i data-i="whatsapp-logo" data-w="regular"></i><a href="{{wa:geral}}" target="_blank" rel="noopener" data-zap="rodape">{{cfg.whatsappExibir}}</a></li>
+            <li><i data-i="envelope-simple" data-w="regular"></i><a href="mailto:{{cfg.email}}">{{cfg.email}}</a></li>
+            <li><i data-i="map-pin" data-w="regular"></i><a href="{{cfg.mapa}}" target="_blank" rel="noopener">{{cfg.endereco.rua}}, {{cfg.endereco.bairro}}, {{cfg.endereco.cidade}} ({{cfg.endereco.uf}}), CEP {{cfg.endereco.cep}}</a></li>
+            <!-- @se cfg.instagram -->
+            <li><i data-i="instagram-logo" data-w="regular"></i><a href="{{cfg.instagram}}" target="_blank" rel="noopener">Instagram</a></li>
+            <!-- /@se -->
+          </ul>
+        </address>
+      </div>
+    </div>
+
+    <div class="container rodape__base">
+      <p>© {{ano}} Target Connect · Todos os direitos reservados<!-- @se cfg.cnpj --> · CNPJ {{cfg.cnpj}}<!-- /@se --></p>
+      <p>Site por <a href="{{cfg.credito}}" target="_blank" rel="noopener">Felipe Rodrigues Sites</a></p>
+    </div>
+  </footer>

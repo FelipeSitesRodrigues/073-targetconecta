@@ -1,17 +1,20 @@
 /**
- * Gera o mapa da seção "Onde atuamos" com a geografia oficial do IBGE (malhas v3),
- * sem desenhar contorno à mão. Grava src/partials/_mapa.html (SVG inline, que o
- * 06-onde-atuamos.html puxa com <!-- @parcial _mapa -->).
+ * Gera os dois mapas da seção "Presença" com a geografia oficial do IBGE (malhas v3),
+ * sem desenhar contorno à mão (reformulação de 11/2026):
  *
- * - Estados: SP e MS em destaque, vizinhos (MT, GO, MG, PR) claros ao fundo.
- * - "Oeste paulista": a Região Geográfica Intermediária de Presidente Prudente
- *   (IBGE 3505), onde caem todas as cidades da operação citadas no material da
- *   Target (Presidente Prudente, Rancharia, Teodoro Sampaio, Quatá, João Ramalho).
- * - Marcadores no centroide oficial de cada município, com os anéis do alvo do logo.
+ * - src/partials/_mapa-brasil.html: o Brasil por estado. SP e MS (atuação comprovada)
+ *   em laranja, o resto como território disponível pra novas parcerias. Cada estado
+ *   leva data-uf, data-nome e data-status, que o 07-presenca.js mostra no hover e no toque.
+ * - src/partials/_mapa-regiao.html: o recorte do oeste paulista, do Pontal e do sul
+ *   do MS, com um ponto no centroide oficial de cada cidade atendida. Cada ponto leva
+ *   data-cidade, ligado à lista de cidades do 07-presenca.html.
+ *
+ * As cidades saem de src/dados/cidades.json (lista do briefing do Rafael). Primavera é
+ * distrito de Rosana, não município: vai com a coordenada do distrito, à mão.
  *
  * Uso: node scripts/gerar-mapa.mjs
  */
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 
 const API = 'https://servicodados.ibge.gov.br/api/v3/malhas'
 const get = async (u) => {
@@ -20,60 +23,23 @@ const get = async (u) => {
   return r.json()
 }
 
-// ---------------------------------------------------------------- dados
-const brasil = await get(`${API}/paises/BR?formato=application/vnd.geo+json&qualidade=intermediaria&intrarregiao=UF`)
-const oeste = await get(`${API}/regioes-intermediarias/3505?formato=application/vnd.geo+json&qualidade=intermediaria`)
-const cidades = [
-  { id: 3541406, nome: 'Presidente Prudente', base: true },
-  { id: 3542206, nome: 'Rancharia' },
-  { id: 3554300, nome: 'Teodoro Sampaio' },
-  { id: 3541703, nome: 'Quatá' },
-  { id: 3525607, nome: 'João Ramalho' },
-]
+const dados = JSON.parse(readFileSync('src/dados/cidades.json', 'utf8'))
+const cidades = dados.regioes.flatMap((r) => r.cidades.map((c) => ({ ...c, regiao: r.id })))
+const nomes = Object.fromEntries(cidades.map((c) => [c.id, c.nome]))
 for (const c of cidades) {
-  const [m] = await get(`${API}/municipios/${c.id}/metadados`)
+  if (c.lat) continue
+  const [m] = await get(`${API}/municipios/${c.ibge}/metadados`)
   c.lon = m.centroide.longitude
   c.lat = m.centroide.latitude
 }
+const brasil = await get(`${API}/paises/BR?formato=application/vnd.geo+json&qualidade=intermediaria&intrarregiao=UF`)
 
-// ---------------------------------------------------------------- projeção
-// Equiretangular com o cosseno da latitude média: em recorte regional, a
-// distorção some e a forma dos estados fica fiel.
-const LON = [-58.3, -47.3]
-const LAT = [-24.3, -17.05]
-const COS = Math.cos((((LAT[0] + LAT[1]) / 2) * Math.PI) / 180)
-const W = 600
-const K = W / ((LON[1] - LON[0]) * COS)
-const H = Math.round((LAT[1] - LAT[0]) * K)
-const px = ([lon, lat]) => [(lon - LON[0]) * COS * K, (LAT[1] - lat) * K]
+const NOMES = { 11: ['RO', 'Rondônia'], 12: ['AC', 'Acre'], 13: ['AM', 'Amazonas'], 14: ['RR', 'Roraima'], 15: ['PA', 'Pará'], 16: ['AP', 'Amapá'], 17: ['TO', 'Tocantins'], 21: ['MA', 'Maranhão'], 22: ['PI', 'Piauí'], 23: ['CE', 'Ceará'], 24: ['RN', 'Rio Grande do Norte'], 25: ['PB', 'Paraíba'], 26: ['PE', 'Pernambuco'], 27: ['AL', 'Alagoas'], 28: ['SE', 'Sergipe'], 29: ['BA', 'Bahia'], 31: ['MG', 'Minas Gerais'], 32: ['ES', 'Espírito Santo'], 33: ['RJ', 'Rio de Janeiro'], 35: ['SP', 'São Paulo'], 41: ['PR', 'Paraná'], 42: ['SC', 'Santa Catarina'], 43: ['RS', 'Rio Grande do Sul'], 50: ['MS', 'Mato Grosso do Sul'], 51: ['MT', 'Mato Grosso'], 52: ['GO', 'Goiás'], 53: ['DF', 'Distrito Federal'] }
+const ATUA = new Set(['SP', 'MS'])
 
-// recorte de cada anel no retângulo da vista (com folga, pra borda cortada ficar fora)
-const F = 6
-function recortar(anel) {
-  const lados = [
-    [(p) => p[0] >= -F, (a, b) => { const t = (-F - a[0]) / (b[0] - a[0]); return [-F, a[1] + t * (b[1] - a[1])] }],
-    [(p) => p[0] <= W + F, (a, b) => { const t = (W + F - a[0]) / (b[0] - a[0]); return [W + F, a[1] + t * (b[1] - a[1])] }],
-    [(p) => p[1] >= -F, (a, b) => { const t = (-F - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), -F] }],
-    [(p) => p[1] <= H + F, (a, b) => { const t = (H + F - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), H + F] }],
-  ]
-  let saida = anel
-  for (const [dentro, cruza] of lados) {
-    const entrada = saida
-    saida = []
-    for (let i = 0; i < entrada.length; i++) {
-      const a = entrada[i]
-      const b = entrada[(i + 1) % entrada.length]
-      if (dentro(b)) {
-        if (!dentro(a)) saida.push(cruza(a, b))
-        saida.push(b)
-      } else if (dentro(a)) saida.push(cruza(a, b))
-    }
-    if (!saida.length) return []
-  }
-  return saida
-}
+// ---------------------------------------------------------------- geometria
+const r1 = (n) => Math.round(n * 10) / 10
 
-// Douglas-Peucker
 function simplificar(pts, tol) {
   if (pts.length < 4) return pts
   const d2 = (p, a, b) => {
@@ -102,105 +68,130 @@ function simplificar(pts, tol) {
   return pts.filter((_, i) => manter[i])
 }
 
-const r1 = (n) => Math.round(n * 10) / 10
-function caminho(geometria) {
-  const poligonos = geometria.type === 'Polygon' ? [geometria.coordinates] : geometria.coordinates
-  let d = ''
-  for (const poli of poligonos)
-    for (const anel of poli) {
-      let pts = recortar(anel.map(px))
-      pts = simplificar(pts, 0.32).map(([x, y]) => [r1(x), r1(y)])
-      pts = pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1])
-      if (pts.length < 3) continue
-      d += 'M' + pts.map((p) => `${p[0]} ${p[1]}`).join('L') + 'Z'
+// recorte de um anel num retângulo (Sutherland-Hodgman), com folga F pra borda ficar fora
+function recortar(anel, W, H, F = 6) {
+  const lados = [
+    [(p) => p[0] >= -F, (a, b) => { const t = (-F - a[0]) / (b[0] - a[0]); return [-F, a[1] + t * (b[1] - a[1])] }],
+    [(p) => p[0] <= W + F, (a, b) => { const t = (W + F - a[0]) / (b[0] - a[0]); return [W + F, a[1] + t * (b[1] - a[1])] }],
+    [(p) => p[1] >= -F, (a, b) => { const t = (-F - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), -F] }],
+    [(p) => p[1] <= H + F, (a, b) => { const t = (H + F - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), H + F] }],
+  ]
+  let saida = anel
+  for (const [dentro, cruza] of lados) {
+    const entrada = saida
+    saida = []
+    for (let i = 0; i < entrada.length; i++) {
+      const a = entrada[i]
+      const b = entrada[(i + 1) % entrada.length]
+      if (dentro(b)) {
+        if (!dentro(a)) saida.push(cruza(a, b))
+        saida.push(b)
+      } else if (dentro(a)) saida.push(cruza(a, b))
     }
-  return d
-}
-
-const uf = (cod) => brasil.features.find((f) => String(f.properties.codarea) === String(cod)).geometry
-const vizinhos = [51, 52, 31, 41].map((c) => caminho(uf(c))).join('')
-const dSP = caminho(uf(35))
-const dMS = caminho(uf(50))
-const dOeste = caminho(oeste.features[0].geometry)
-
-// centroide de área (fórmula do polígono) do maior anel: o ponto de equilíbrio
-// da forma, melhor que a média dos vértices pra centralizar um nome
-function centroide(d) {
-  let melhor = null
-  for (const anel of d.split('M').filter(Boolean)) {
-    const p = [...anel.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])])
-    let a = 0, cx = 0, cy = 0
-    for (let i = 0; i < p.length; i++) {
-      const [x0, y0] = p[i]
-      const [x1, y1] = p[(i + 1) % p.length]
-      const f = x0 * y1 - x1 * y0
-      a += f
-      cx += (x0 + x1) * f
-      cy += (y0 + y1) * f
-    }
-    a /= 2
-    if (!melhor || Math.abs(a) > Math.abs(melhor.a)) melhor = { a, x: cx / (6 * a), y: cy / (6 * a) }
+    if (!saida.length) return []
   }
-  return [melhor.x, melhor.y]
+  return saida
 }
-const caixa = (d) => {
-  const p = [...d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])])
-  return { x0: Math.min(...p.map((q) => q[0])), x1: Math.max(...p.map((q) => q[0])), y0: Math.min(...p.map((q) => q[1])), y1: Math.max(...p.map((q) => q[1])) }
-}
-const cMS = centroide(dMS)
-const bOeste = caixa(dOeste)
 
-const marcadores = cidades
+// projeção equiretangular com o cosseno da latitude média (fiel em recorte regional)
+function projecao(LON, LAT, W) {
+  const COS = Math.cos((((LAT[0] + LAT[1]) / 2) * Math.PI) / 180)
+  const K = W / ((LON[1] - LON[0]) * COS)
+  const H = Math.round((LAT[1] - LAT[0]) * K)
+  const px = ([lon, lat]) => [(lon - LON[0]) * COS * K, (LAT[1] - lat) * K]
+  const caminho = (geo, tol) => {
+    const poligonos = geo.type === 'Polygon' ? [geo.coordinates] : geo.coordinates
+    let d = ''
+    for (const poli of poligonos)
+      for (const anel of poli) {
+        let pts = recortar(anel.map(px), W, H)
+        pts = simplificar(pts, tol).map(([x, y]) => [r1(x), r1(y)])
+        pts = pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1])
+        if (pts.length < 3) continue
+        d += 'M' + pts.map((p) => `${p[0]} ${p[1]}`).join('L') + 'Z'
+      }
+    return d
+  }
+  return { W, H, px, caminho }
+}
+
+// ---------------------------------------------------------------- Brasil
+const BR = projecao([-74.2, -34.6], [-33.9, 5.4], 560)
+const estados = brasil.features
+  .map((f) => {
+    const [sigla, nome] = NOMES[f.properties.codarea]
+    const atua = ATUA.has(sigla)
+    const d = BR.caminho(f.geometry, 0.9)
+    const status = atua ? 'Atuação comprovada' : 'Disponível para novas parcerias'
+    return `<path class="br__uf${atua ? ' br__uf--atua' : ''}" d="${d}" data-uf="${sigla}" data-nome="${nome}" data-status="${status}"><title>${nome}: ${status.toLowerCase()}</title></path>`
+  })
+  .join('\n      ')
+// moldura da região do recorte, pra ligar os dois mapas
+const REG_LON = [-55.95, -50.15]
+const REG_LAT = [-24.15, -21.55]
+const [mx0, my0] = BR.px([REG_LON[0], REG_LAT[1]]).map(r1)
+const [mx1, my1] = BR.px([REG_LON[1], REG_LAT[0]]).map(r1)
+
+const htmlBrasil = `<!-- Gerado por scripts/gerar-mapa.mjs a partir das malhas do IBGE (${new Date().toISOString().slice(0, 10)}). Não editar à mão. -->
+<svg class="br" viewBox="0 0 ${BR.W} ${BR.H}" role="img" aria-labelledby="br-titulo br-desc">
+    <title id="br-titulo">Mapa do Brasil com os estados de atuação da Target Connect</title>
+    <desc id="br-desc">São Paulo e Mato Grosso do Sul em destaque, com atuação comprovada. Os demais estados estão disponíveis para novas parcerias.</desc>
+    <g class="br__estados">
+      ${estados}
+    </g>
+    <rect class="br__moldura" x="${mx0}" y="${my0}" width="${r1(mx1 - mx0)}" height="${r1(my1 - my0)}" rx="3"/>
+  </svg>
+`
+
+// ---------------------------------------------------------------- recorte regional
+const RG = projecao(REG_LON, REG_LAT, 720)
+const vizinhos = brasil.features
+  .filter((f) => [41, 51, 52, 31].includes(Number(f.properties.codarea)))
+  .map((f) => RG.caminho(f.geometry, 0.3))
+  .join('')
+const uf = (cod) => RG.caminho(brasil.features.find((f) => Number(f.properties.codarea) === cod).geometry, 0.3)
+
+const pontos = cidades
   .map((c) => {
-    const [x, y] = px([c.lon, c.lat]).map(r1)
+    const [x, y] = RG.px([c.lon, c.lat]).map(r1)
+    const rotulo = c.nome + (c.distrito ? ` (distrito de ${c.distrito})` : '') + ` (${c.uf})`
     return c.base
-      ? `<g class="mapa__base" transform="translate(${x} ${y})"><title>${c.nome} (SP): base da Target</title><circle class="mapa__anel mapa__anel--3" r="15"/><circle class="mapa__anel mapa__anel--2" r="9.5"/><circle class="mapa__anel" r="5.4"/><circle class="mapa__miolo" r="2.8"/></g>`
-      : `<g class="mapa__cidade" transform="translate(${x} ${y})"><title>${c.nome} (SP)</title><circle class="mapa__anel" r="4.4"/><circle class="mapa__miolo" r="2"/></g>`
+      ? `<g class="rg__ponto rg__ponto--base" transform="translate(${x} ${y})" data-cidade="${c.id}"><title>${rotulo}: base da Target Connect</title><circle class="rg__anel rg__anel--2" r="16"/><circle class="rg__anel" r="9"/><circle class="rg__miolo" r="4.4"/></g>`
+      : `<g class="rg__ponto" transform="translate(${x} ${y})" data-cidade="${c.id}"><title>${rotulo}</title><circle class="rg__anel" r="7"/><circle class="rg__miolo" r="3.4"/></g>`
   })
   .join('\n      ')
 
-const base = cidades.find((c) => c.base)
-const [bx, by] = px([base.lon, base.lat]).map(r1)
-// chamada do oeste paulista: sai do alto da região e sobe em cotovelo até o nome, à direita
-const chamada = { x: r1(bOeste.x1 + 26), y: r1(bOeste.y0 - 34) }
-const pct = (v, total) => `${r1((v / total) * 100)}%`
+// nomes fixos no mapa: só a base e um por região, o resto aparece no hover
+const nomeFixo = (id, dx, dy, ancora = 'start') => {
+  const c = cidades.find((q) => q.id === id)
+  const [x, y] = RG.px([c.lon, c.lat]).map(r1)
+  return `<text class="rg__nome${c.base ? ' rg__nome--base' : ''}" x="${r1(x + dx)}" y="${r1(y + dy)}" text-anchor="${ancora}">${c.nome}</text>`
+}
+const legendaUF = (lon, lat, txt) => {
+  const [x, y] = RG.px([lon, lat]).map(r1)
+  return `<text class="rg__uf" x="${x}" y="${y}" text-anchor="middle">${txt}</text>`
+}
 
-const html = `<!-- Gerado por scripts/gerar-mapa.mjs a partir das malhas do IBGE (${new Date().toISOString().slice(0, 10)}). Não editar à mão. -->
-<div class="mapa__quadro" style="--mapa-proporcao: ${W} / ${H}">
-  <svg class="mapa__svg" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="mapa-titulo mapa-desc" preserveAspectRatio="xMidYMid meet">
-    <title id="mapa-titulo">Mapa das cidades atendidas pela Target Connecta em São Paulo e Mato Grosso do Sul</title>
-    <desc id="mapa-desc">Mato Grosso do Sul e o oeste paulista em destaque, com a base em Presidente Prudente e presença comercial em Rancharia, Teodoro Sampaio, Quatá e João Ramalho.</desc>
-    <defs>
-      <linearGradient id="mapa-marinho" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#13254A"/>
-        <stop offset="1" stop-color="#08111F"/>
-      </linearGradient>
-      <linearGradient id="mapa-oeste-fundo" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#22375A"/>
-        <stop offset="1" stop-color="#101F3D"/>
-      </linearGradient>
-      <radialGradient id="mapa-some" cx=".5" cy=".5" r=".5">
-        <stop offset=".5" stop-color="#fff"/>
-        <stop offset=".96" stop-color="#fff" stop-opacity="0"/>
-      </radialGradient>
-      <mask id="mapa-mascara"><rect x="-10" y="-10" width="${W + 20}" height="${H + 20}" fill="url(#mapa-some)"/></mask>
-    </defs>
-    <g mask="url(#mapa-mascara)">
-      <path class="mapa__vizinhos" d="${vizinhos}"/>
-      <path class="mapa__sp" d="${dSP}"/>
+const htmlRegiao = `<!-- Gerado por scripts/gerar-mapa.mjs a partir das malhas do IBGE (${new Date().toISOString().slice(0, 10)}). Não editar à mão. -->
+<svg class="rg" viewBox="0 0 ${RG.W} ${RG.H}" role="img" aria-labelledby="rg-titulo rg-desc">
+    <title id="rg-titulo">Cidades atendidas pela operação comercial da Target Connect</title>
+    <desc id="rg-desc">${cidades.length} cidades no oeste paulista, no Pontal do Paranapanema e no sul de Mato Grosso do Sul, com base em Presidente Prudente.</desc>
+    <path class="rg__vizinho" d="${vizinhos}"/>
+    <path class="rg__estado" d="${uf(50)}"/>
+    <path class="rg__estado" d="${uf(35)}"/>
+    ${legendaUF(-54.1, -21.8, 'MATO GROSSO DO SUL')}
+    ${legendaUF(-50.75, -21.75, 'SÃO PAULO')}
+    ${legendaUF(-52.6, -23.85, 'PARANÁ')}
+    <g class="rg__pontos">
+      ${pontos}
     </g>
-    <path class="mapa__ms" d="${dMS}"/>
-    <path class="mapa__oeste" d="${dOeste}"/>
-    <polyline class="mapa__chamada" points="${r1(bx + 6)},${r1(by - 7)} ${r1(chamada.x - 16)},${chamada.y} ${chamada.x - 2},${chamada.y}"/>
-    <g class="mapa__pontos">
-      ${marcadores}
-    </g>
+    ${nomeFixo('presidente-prudente', 14, -14)}
+    ${nomeFixo('navirai', 12, -10)}
+    ${nomeFixo('amambai', -12, -10, 'end')}
   </svg>
-  <span class="mapa__nome" style="left: ${pct(cMS[0], W)}; top: ${pct(cMS[1], H)}" aria-hidden="true">Mato Grosso<br>do Sul</span>
-  <span class="mapa__nome mapa__nome--oeste" style="left: ${pct(chamada.x, W)}; top: ${pct(chamada.y, H)}" aria-hidden="true"><strong>Oeste paulista</strong></span>
-</div>
 `
-writeFileSync('src/partials/_mapa.html', html)
-console.log(`ok src/partials/_mapa.html ${(html.length / 1024).toFixed(1)} KB · viewBox ${W}x${H}`)
-for (const c of cidades) console.log(`  ${c.nome}: ${c.lat}, ${c.lon} → ${px([c.lon, c.lat]).map(r1).join(', ')}`)
-console.log('  oeste paulista (caixa):', bOeste, '· chamada:', chamada, '· centro do MS:', cMS.map(r1))
+
+writeFileSync('src/partials/_mapa-brasil.html', htmlBrasil)
+writeFileSync('src/partials/_mapa-regiao.html', htmlRegiao)
+console.log(`ok _mapa-brasil.html ${(htmlBrasil.length / 1024).toFixed(1)} KB · ${BR.W}x${BR.H}`)
+console.log(`ok _mapa-regiao.html ${(htmlRegiao.length / 1024).toFixed(1)} KB · ${RG.W}x${RG.H}`)

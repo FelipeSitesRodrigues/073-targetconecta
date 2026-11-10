@@ -1,0 +1,77 @@
+/* 04 · Como funciona */
+.como .container { position: relative; }
+.como__linha {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  margin-top: 27px;
+  background: linear-gradient(90deg, var(--laranja) 0%, var(--laranja-claro) 60%, rgb(240 122 26 / .15) 100%);
+  transform-origin: left;
+}
+.como__passos { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; }
+.como__passo { position: relative; }
+.como__num {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--marinho);
+  color: var(--laranja-claro);
+  font: 800 20px/1 var(--fonte-titulo);
+  box-shadow: 0 0 0 6px var(--gelo);
+}
+.como__quem {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gelo-2);
+  color: var(--tinta);
+  font: 600 11px/1.2 var(--fonte-rotulo);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.como__passo h3 { margin-top: 10px; color: var(--tinta); font: 700 20px/1.2 var(--fonte-forte); }
+.como__passo p { margin-top: 6px; font-size: 14.5px; line-height: 1.55; }
+/* o passo do provedor é o único fora da cor da Target */
+.como__passo--provedor .como__num { background: var(--branco); color: var(--tinta); border: 2px solid var(--tinta); }
+.como__passo--provedor .como__quem { background: rgb(240 122 26 / .14); color: var(--laranja-texto); }
+
+.como__faixa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 40px;
+  margin-top: clamp(36px, 4vw, 52px);
+  padding: 26px 32px;
+  border-radius: var(--raio);
+  background: linear-gradient(110deg, var(--marinho) 0%, var(--marinho-2) 100%);
+}
+.como__nota { display: flex; gap: 12px; align-items: flex-start; max-width: 460px; font-size: 14.5px; line-height: 1.5; }
+.como__nota .i { width: 24px; height: 24px; flex: none; color: var(--laranja); }
+
+@media (max-width: 1099.98px) {
+  .como__linha { display: none; }
+  .como__passos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 20px; }
+  .como__faixa { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 639.98px) {
+  .como__passos { grid-template-columns: 1fr; gap: 0; }
+  .como__passo { display: grid; grid-template-columns: 56px 1fr; column-gap: 18px; padding-bottom: 24px; }
+  .como__passo > :not(.como__num) { grid-column: 2; }
+  .como__num { grid-row: span 3; width: 48px; height: 48px; font-size: 18px; }
+  .como__quem { margin-top: 0; justify-self: start; }
+  /* trilho vertical ligando os números */
+  .como__passo:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 52px;
+    bottom: 4px;
+    width: 2px;
+    background: rgb(240 122 26 / .45);
+  }
+  .como__faixa { padding: 22px 20px; }
+}

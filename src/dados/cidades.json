@@ -1,0 +1,41 @@
+{
+  "_nota": "Cidades atendidas, da lista do briefing do Rafael (2026-11-10). O briefing fala em mais de 25; as que faltarem entram aqui e o mapa sai de novo com npm run mapa.",
+  "regioes": [
+    {
+      "id": "oeste",
+      "nome": "Oeste Paulista e Pontal do Paranapanema",
+      "uf": "SP",
+      "cidades": [
+        { "id": "presidente-prudente", "nome": "Presidente Prudente", "uf": "SP", "ibge": 3541406, "base": true },
+        { "id": "alvares-machado", "nome": "Álvares Machado", "uf": "SP", "ibge": 3501301 },
+        { "id": "martinopolis", "nome": "Martinópolis", "uf": "SP", "ibge": 3529203 },
+        { "id": "rancharia", "nome": "Rancharia", "uf": "SP", "ibge": 3542206 },
+        { "id": "quata", "nome": "Quatá", "uf": "SP", "ibge": 3541703 },
+        { "id": "joao-ramalho", "nome": "João Ramalho", "uf": "SP", "ibge": 3525607 },
+        { "id": "presidente-bernardes", "nome": "Presidente Bernardes", "uf": "SP", "ibge": 3541208 },
+        { "id": "santo-anastacio", "nome": "Santo Anastácio", "uf": "SP", "ibge": 3547700 },
+        { "id": "presidente-epitacio", "nome": "Presidente Epitácio", "uf": "SP", "ibge": 3541307 },
+        { "id": "teodoro-sampaio", "nome": "Teodoro Sampaio", "uf": "SP", "ibge": 3554300 },
+        { "id": "rosana", "nome": "Rosana", "uf": "SP", "ibge": 3544251 },
+        { "id": "primavera", "nome": "Primavera", "uf": "SP", "distrito": "Rosana", "lat": -22.5085, "lon": -52.9555 },
+        { "id": "euclides-da-cunha-paulista", "nome": "Euclides da Cunha Paulista", "uf": "SP", "ibge": 3515350 },
+        { "id": "mirante-do-paranapanema", "nome": "Mirante do Paranapanema", "uf": "SP", "ibge": 3530201 }
+      ]
+    },
+    {
+      "id": "ms",
+      "nome": "Sul de Mato Grosso do Sul",
+      "uf": "MS",
+      "cidades": [
+        { "id": "amambai", "nome": "Amambai", "uf": "MS", "ibge": 5000609 },
+        { "id": "navirai", "nome": "Naviraí", "uf": "MS", "ibge": 5005707 },
+        { "id": "itaquirai", "nome": "Itaquiraí", "uf": "MS", "ibge": 5004601 },
+        { "id": "iguatemi", "nome": "Iguatemi", "uf": "MS", "ibge": 5004304 },
+        { "id": "juti", "nome": "Juti", "uf": "MS", "ibge": 5005152 },
+        { "id": "tacuru", "nome": "Tacuru", "uf": "MS", "ibge": 5007950 },
+        { "id": "coronel-sapucaia", "nome": "Coronel Sapucaia", "uf": "MS", "ibge": 5003157 },
+        { "id": "caarapo", "nome": "Caarapó", "uf": "MS", "ibge": 5002407 }
+      ]
+    }
+  ]
+}

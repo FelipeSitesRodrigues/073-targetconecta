@@ -1,0 +1,18 @@
+/* 03 · Nossa estrutura */
+.operacao__grade { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.operacao__item { padding: 24px 22px 26px; }
+.operacao__item h3 { margin-top: 18px; color: var(--gelo); font: 700 19px/1.2 var(--fonte-forte); }
+.operacao__item p { margin-top: 8px; font-size: 14.5px; line-height: 1.55; }
+.operacao__fecho { margin-top: clamp(32px, 3.6vw, 44px); max-width: 900px; }
+
+@media (max-width: 1099.98px) {
+  .operacao__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 559.98px) {
+  .operacao__grade { grid-template-columns: 1fr; gap: 10px; }
+  .operacao__item { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; padding: 18px; }
+  .operacao__item .icone-caixa { grid-row: span 2; width: 46px; height: 46px; }
+  .operacao__item .icone { width: 26px; height: 26px; }
+  .operacao__item h3 { margin-top: 0; font-size: 18px; }
+  .operacao__item p { margin-top: 2px; }
+}

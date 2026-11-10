@@ -1,0 +1,45 @@
+/* 11 · Contato */
+.contato__grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 36px 64px; align-items: start; }
+.contato__texto .titulo { margin-bottom: 20px; }
+.contato__canais { display: grid; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--linha-clara); }
+.contato__canais li { display: flex; align-items: center; gap: 12px; color: var(--tinta); font-weight: 600; }
+.contato__canais .i { width: 22px; height: 22px; color: var(--laranja-texto); }
+.contato__canais a:hover { color: var(--laranja-texto); }
+
+.contato__card { padding: clamp(22px, 3vw, 34px); }
+.contato__card-titulo { color: var(--tinta); font: 800 clamp(1.3rem, 1.1rem + .7vw, 1.65rem)/1.12 var(--fonte-titulo); margin-bottom: 20px; text-wrap: balance; }
+.contato__sem-js { margin-bottom: 14px; }
+/* reserva a altura do formulário antes de ele ser montado (sem salto de layout) */
+.js .contato__form-lugar { min-height: 560px; }
+.js .contato__form-lugar.montado { min-height: 0; }
+
+.form__grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+.form__campo { display: flex; flex-direction: column; gap: 6px; }
+.form__campo--largo { grid-column: 1 / -1; }
+.form__campo span { color: var(--tinta); font: 600 14px/1.3 var(--fonte-texto); }
+.form__campo em { font-style: normal; color: var(--texto-claro); font-weight: 500; }
+.form__campo input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--linha-clara);
+  border-radius: var(--raio-p);
+  background: var(--gelo);
+  color: var(--tinta);
+  font-size: 16px;
+  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.form__campo input::placeholder { color: #8A94AA; }
+.form__campo input:focus { outline: none; border-color: var(--laranja-texto); background: var(--branco); box-shadow: 0 0 0 3px rgb(240 122 26 / .18); }
+.form__campo input[aria-invalid="true"] { border-color: #C2361B; background: #FFF6F4; }
+.form__erro { margin-top: 14px; color: #B42318; font-weight: 600; font-size: 14.5px; }
+.form__enviar { width: 100%; margin-top: 18px; }
+.form__nota { margin-top: 10px; font-size: 13.5px; text-align: center; }
+
+@media (max-width: 999.98px) {
+  .contato__grade { grid-template-columns: 1fr; }
+}
+@media (max-width: 559.98px) {
+  .form__grade { grid-template-columns: 1fr; }
+  .js .contato__form-lugar { min-height: 860px; }
+}

@@ -1,0 +1,46 @@
+<!-- 11 · Conversão (bloco 11 do briefing). Formulário B2B com os campos do briefing;
+     o envio abre o WhatsApp comercial com tudo preenchido (mensagens.proposta no
+     config). O formulário mora num <template> e o 11-contato.js monta quando a seção
+     chega perto da tela: form no HTML faz o autofill do Chrome forçar layout no
+     primeiro quadro (aprendizado do 080). Sem JS, fica o botão direto do WhatsApp. -->
+<section class="secao secao--clara contato" id="contato" aria-labelledby="contato-titulo">
+  <div class="container contato__grade">
+    <div class="contato__texto" data-revela>
+      <span class="rotulo">Contrate a Target Connect</span>
+      <h2 class="titulo" id="contato-titulo">Sua rede está pronta para crescer. <span class="destaque">Sua operação comercial também?</span></h2>
+      <p class="texto-apoio">Imagine uma empresa que estrutura a sua equipe, coloca líderes e veículos na rua, planeja os territórios, executa as vendas e acompanha os resultados. Essa é a Target Connect.</p>
+      <p class="texto-apoio">Você mantém o foco na qualidade da conexão, nas instalações e no relacionamento com os seus assinantes. Nós trabalhamos para ampliar a sua presença comercial.</p>
+      <ul class="contato__canais" role="list">
+        <li><i data-i="whatsapp-logo" data-w="regular"></i><a href="{{wa:geral}}" target="_blank" rel="noopener" data-zap="contato-whatsapp">{{cfg.whatsappExibir}}</a></li>
+        <li><i data-i="envelope-simple" data-w="regular"></i><a href="mailto:{{cfg.email}}">{{cfg.email}}</a></li>
+        <li><i data-i="map-pin" data-w="regular"></i><span>{{cfg.endereco.cidade}} ({{cfg.endereco.uf}})</span></li>
+      </ul>
+    </div>
+
+    <div class="card contato__card" data-revela style="--i:1">
+      <p class="contato__card-titulo">Vamos construir sua próxima operação porta a porta?</p>
+      <div class="contato__form-lugar" data-form-lugar>
+        <p class="contato__sem-js">Fale direto com o comercial da Target Connect:</p>
+        <a class="btn btn--laranja" href="{{wa:proposta_simples}}" target="_blank" rel="noopener" data-zap="contato-sem-form"><i data-i="whatsapp-logo" data-w="regular"></i>Solicitar proposta comercial</a>
+      </div>
+      <template id="form-contato">
+        <form class="form" novalidate data-form-proposta data-whatsapp="{{cfg.whatsapp}}" data-modelo="{{attr:cfg.mensagens.proposta}}">
+          <div class="form__grade">
+            <label class="form__campo"><span>Nome do responsável</span><input name="nome" autocomplete="name" required></label>
+            <label class="form__campo"><span>Nome do provedor</span><input name="provedor" autocomplete="organization" required></label>
+            <label class="form__campo"><span>Cargo</span><input name="cargo" autocomplete="organization-title" required></label>
+            <label class="form__campo"><span>Telefone e WhatsApp</span><input name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000" required></label>
+            <label class="form__campo form__campo--largo"><span>E-mail corporativo</span><input name="email" type="email" autocomplete="email" required></label>
+            <label class="form__campo"><span>Cidade e estado</span><input name="cidade" autocomplete="address-level2" placeholder="Ex.: Presidente Prudente (SP)" required></label>
+            <label class="form__campo"><span>Meta mensal de novos assinantes</span><input name="meta" inputmode="numeric" placeholder="Ex.: 300" required></label>
+            <label class="form__campo form__campo--largo"><span>Regiões em que deseja expandir</span><input name="regioes" placeholder="Cidades, bairros ou regiões" required></label>
+            <label class="form__campo form__campo--largo"><span>Clientes atuais, aproximado <em>(opcional)</em></span><input name="clientes" inputmode="numeric"></label>
+          </div>
+          <p class="form__erro" role="alert" hidden>Preencha os campos destacados para seguir.</p>
+          <button class="btn btn--laranja form__enviar" type="submit"><i data-i="whatsapp-logo" data-w="regular"></i>Solicitar proposta comercial</button>
+          <p class="form__nota">O envio abre o WhatsApp comercial da Target Connect com os seus dados já escritos. É só mandar.</p>
+        </form>
+      </template>
+    </div>
+  </div>
+</section>

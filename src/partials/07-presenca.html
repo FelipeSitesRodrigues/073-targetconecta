@@ -1,0 +1,40 @@
+<!-- 07 · Nossa presença (bloco 8 do briefing). Dois mapas do IBGE (scripts/gerar-mapa.mjs):
+     o Brasil, que separa atuação comprovada de território disponível, e o recorte da
+     região com um ponto por cidade. A lista de cidades sai de src/dados/cidades.json
+     (marcador "@cidades" no build) e conversa com os pontos no 07-presenca.js. -->
+<section class="secao secao--clara pres" id="presenca" aria-labelledby="pres-titulo">
+  <div class="container">
+    <header class="secao-cab" data-revela>
+      <div>
+        <span class="rotulo">Nossa presença</span>
+        <h2 class="titulo" id="pres-titulo">Nascemos no interior. <span class="destaque">Nossa visão é nacional.</span></h2>
+      </div>
+      <p class="texto-apoio secao-cab__apoio">Uma operação consolidada regionalmente, com metodologia preparada para expandir pelo Brasil. Toque num estado ou numa cidade para ver.</p>
+    </header>
+
+    <div class="pres__mapas">
+      <div class="card pres__brasil" data-revela>
+        <!-- @parcial _mapa-brasil -->
+        <p class="pres__info" aria-live="polite"><strong data-pres-nome>São Paulo e Mato Grosso do Sul</strong><span data-pres-status>Atuação comprovada</span></p>
+        <ul class="pres__legenda" role="list">
+          <li><span class="pres__cor pres__cor--atua"></span>Atuação comprovada</li>
+          <li><span class="pres__cor"></span>Disponível para novas parcerias</li>
+        </ul>
+      </div>
+
+      <div class="card pres__regiao" data-revela style="--i:1">
+        <div class="pres__regiao-mapa">
+          <!-- @parcial _mapa-regiao -->
+        </div>
+        <div class="pres__cidades">
+          <!-- @cidades -->
+        </div>
+      </div>
+    </div>
+
+    <div class="pres__acao" data-revela>
+      <p>Seu provedor está em outro estado? A metodologia vai junto.</p>
+      <a class="btn btn--marinho" href="{{wa:estado}}" target="_blank" rel="noopener" data-zap="presenca-estado"><i data-i="map-pin-area" data-w="regular"></i>Quero a Target Connect no meu estado</a>
+    </div>
+  </div>
+</section>

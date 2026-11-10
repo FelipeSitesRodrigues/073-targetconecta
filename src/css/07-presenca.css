@@ -1,0 +1,66 @@
+/* 07 · Presença */
+.pres__mapas { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr); gap: 16px; align-items: stretch; }
+.pres__brasil, .pres__regiao { padding: 22px; }
+
+/* Brasil */
+.br { width: 100%; height: auto; max-width: 420px; margin-inline: auto; }
+.br__uf { fill: #D9DFEA; stroke: var(--branco); stroke-width: 1.1; stroke-linejoin: round; cursor: pointer; transition: fill .2s ease; }
+.br__uf--atua { fill: var(--laranja); }
+.br__uf:hover, .br__uf.ativo { fill: #A9B5CB; }
+.br__uf--atua:hover, .br__uf--atua.ativo { fill: var(--laranja-texto); }
+.br__moldura { fill: none; stroke: var(--marinho); stroke-width: 1.6; stroke-dasharray: 4 3; pointer-events: none; }
+.pres__info { display: flex; flex-direction: column; gap: 2px; margin-top: 14px; min-height: 46px; }
+.pres__info strong { color: var(--tinta); font: 700 18px/1.2 var(--fonte-forte); }
+.pres__info span { color: var(--laranja-texto); font: 600 12px/1.35 var(--fonte-rotulo); letter-spacing: .12em; text-transform: uppercase; }
+.pres__info.disponivel span { color: var(--texto-claro); }
+.pres__legenda { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--linha-clara); font-size: 13.5px; }
+.pres__legenda li { display: flex; align-items: center; gap: 8px; }
+.pres__cor { width: 14px; height: 14px; border-radius: 4px; background: #D9DFEA; }
+.pres__cor--atua { background: var(--laranja); }
+
+/* recorte da região */
+.pres__regiao { display: flex; flex-direction: column; gap: 18px; background: var(--marinho); border-color: transparent; }
+.rg { width: 100%; height: auto; }
+.rg__vizinho { fill: #0A1430; stroke: #2A3A5E; stroke-width: 1; stroke-dasharray: 3 3; }
+.rg__estado { fill: #213A78; stroke: #5C74AA; stroke-width: 1.2; stroke-linejoin: round; }
+.rg__uf { fill: #6F82A8; font: 600 10.5px/1 var(--fonte-rotulo); letter-spacing: .16em; }
+.rg__ponto { cursor: pointer; }
+.rg__anel { fill: rgb(240 122 26 / .22); stroke: var(--laranja); stroke-width: 1.2; transition: transform .25s var(--ease-out), fill .2s ease; }
+.rg__anel--2 { fill: none; stroke-opacity: .5; }
+.rg__miolo { fill: var(--laranja-claro); }
+.rg__ponto--base .rg__miolo { fill: var(--branco); }
+.rg__ponto.ativo .rg__anel { fill: rgb(240 122 26 / .55); transform: scale(1.5); }
+.rg__nome { fill: var(--gelo); font: 700 13px/1 var(--fonte-forte); paint-order: stroke; stroke: var(--marinho); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.rg__nome--base { fill: var(--laranja-claro); font-size: 14px; }
+
+.pres__grupo + .pres__grupo { margin-top: 14px; }
+.pres__grupo h3 { color: var(--laranja-claro); font: 600 12px/1.3 var(--fonte-rotulo); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.pres__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pres__chip {
+  padding: 5px 11px;
+  border: 1px solid rgb(120 140 180 / .35);
+  border-radius: 999px;
+  color: var(--prata);
+  font-size: 13.5px;
+  line-height: 1.3;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.pres__chip:hover, .pres__chip:focus-visible, .pres__chip.ativo { border-color: var(--laranja); color: var(--branco); background: rgb(240 122 26 / .18); }
+.pres__chip--base { border-color: var(--laranja); color: var(--branco); }
+
+.pres__acao { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 28px; margin-top: 22px; }
+.pres__acao p { color: var(--tinta); font: 700 19px/1.3 var(--fonte-forte); }
+
+@media (max-width: 999.98px) {
+  .pres__mapas { grid-template-columns: 1fr; }
+  .pres__brasil { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 24px; align-items: center; }
+  .pres__brasil .br { grid-row: span 2; }
+}
+@media (max-width: 559.98px) {
+  .pres__brasil { display: block; }
+  .pres__brasil, .pres__regiao { padding: 16px; }
+  .rg__nome { font-size: 17px; }
+  .rg__nome--base { font-size: 18px; }
+  .rg__uf { font-size: 14px; }
+  .pres__acao .btn { width: 100%; }
+}
